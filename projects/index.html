@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects Catalog — Tarik Tariq</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gun:      #1A1F2E;
+    --gun-mid:  #232A3B;
+    --steel:    #8B9BAE;
+    --alum:     #C8D4E0;
+    --copper:   #C97240;
+    --copper-lt:#E08A58;
+    --offwhite: #EEF1F4;
+    --white:    #FFFFFF;
+    --mono: 'JetBrains Mono', monospace;
+    --display: 'Rajdhani', sans-serif;
+    --body: 'Inter', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--body);
+    background: var(--gun);
+    color: var(--alum);
+    overflow-x: hidden;
+    min-height: 100vh;
+    padding-bottom: 5rem;
+  }
+
+  /* Blueprint grid background */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(200,212,224,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,212,224,0.03) 1px, transparent 1px),
+      linear-gradient(rgba(200,212,224,0.01) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,212,224,0.01) 1px, transparent 1px);
+    background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 2.5rem;
+    background: rgba(26,31,46,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,212,224,0.08);
+  }
+  .nav-logo {
+    font-family: var(--display);
+    font-size: 1.25rem; font-weight: 700; letter-spacing: 0.12em;
+    color: var(--alum); text-decoration: none; text-transform: uppercase;
+  }
+  .nav-logo span { color: var(--copper); }
+  .back-link {
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em;
+    color: var(--steel); text-decoration: none; text-transform: uppercase;
+    transition: color 0.2s;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .back-link:hover { color: var(--copper); }
+
+  /* ── CONTAINER ── */
+  .container {
+    max-width: 1100px;
+    margin: 8rem auto 0;
+    padding: 0 2.5rem;
+  }
+
+  .header-block {
+    margin-bottom: 3.5rem;
+    position: relative;
+    border-left: 2px solid var(--copper);
+    padding-left: 1.5rem;
+  }
+  .eyebrow {
+    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.15em;
+    color: var(--copper); text-transform: uppercase; margin-bottom: 0.5rem;
+  }
+  .title {
+    font-family: var(--display); font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--white);
+  }
+  .subtitle {
+    font-size: 0.95rem; color: var(--steel); line-height: 1.75;
+    margin-top: 0.5rem; max-width: 600px;
+  }
+
+  /* ── FILTERS ── */
+  .filters {
+    display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2.5rem;
+  }
+  .filter-btn {
+    font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em;
+    text-transform: uppercase; background: rgba(200,212,224,0.05);
+    border: 1px solid rgba(200,212,224,0.1); color: var(--steel);
+    padding: 0.5rem 1.2rem; cursor: pointer; transition: all 0.2s;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--copper); border-color: var(--copper); color: var(--white);
+  }
+
+  /* ── PROJECTS GRID ── */
+  .projects-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+  }
+
+  .project-card {
+    background: rgba(200,212,224,0.03);
+    border: 1px solid rgba(200,212,224,0.08);
+    padding: 2.5rem 2rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.2s;
+  }
+  
+  .project-card:hover {
+    border-color: rgba(201,114,64,0.4);
+    transform: translateY(-2px);
+    background: rgba(200,212,224,0.05);
+  }
+
+  /* Structural blueprint marks on cards */
+  .project-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--copper); transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .project-card:hover::before { transform: scaleX(1); }
+
+  .project-meta {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 1rem;
+  }
+  .project-tag {
+    font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em;
+    color: var(--copper); text-transform: uppercase;
+  }
+  .project-date {
+    font-family: var(--mono); font-size: 0.65rem; color: var(--steel);
+  }
+
+  .project-title {
+    font-family: var(--display); font-size: 1.4rem; font-weight: 700;
+    color: var(--white); text-transform: uppercase; line-height: 1.2;
+    margin-bottom: 1rem; letter-spacing: 0.04em;
+  }
+  
+  .project-desc {
+    font-size: 0.88rem; color: var(--steel); line-height: 1.8;
+    margin-bottom: 2rem;
+    flex-grow: 1;
+  }
+
+  .project-tools {
+    display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 2rem;
+  }
+  .tool-chip {
+    font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--alum); background: rgba(200,212,224,0.06);
+    border: 1px solid rgba(200,212,224,0.12);
+    padding: 0.2rem 0.65rem;
+  }
+
+  .btn-report {
+    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em;
+    text-transform: uppercase; text-decoration: none;
+    padding: 0.75rem 1.5rem; border: 1px solid;
+    text-align: center;
+    transition: all 0.2s; cursor: pointer; display: block;
+    width: 100%;
+    background: transparent; border-color: rgba(200,212,224,0.2); color: var(--alum);
+  }
+  .btn-report:hover {
+    border-color: var(--copper); color: var(--copper);
+    background: rgba(201,114,64,0.04);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 8rem;
+    padding: 2rem 2.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(200,212,224,0.06);
+    background: rgba(26,31,46,0.3);
+  }
+  footer p {
+    font-family: var(--mono); font-size: 0.62rem;
+    color: var(--steel); letter-spacing: 0.08em;
+  }
+  footer span { color: var(--copper); }
+
+  @media (max-width: 768px) {
+    .container { margin-top: 6rem; padding: 0 1.5rem; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="../index.html" class="nav-logo">T<span>.</span>Tariq</a>
+  <a href="../index.html" class="back-link">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+    Back to Main
+  </a>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+  
+  <div class="header-block">
+    <p class="eyebrow">// Projects Library & Showcase</p>
+    <h1 class="title">Engineering Projects</h1>
+    <p class="subtitle">
+      Detailed mechanical design portfolios, sizing reports, and simulation validation packages. 
+      Click on any project card to review the complete technical report.
+    </p>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters">
+    <button class="filter-btn active" onclick="filterProjects('all')">All Work</button>
+    <button class="filter-btn" onclick="filterProjects('mechanical')">Mechanical Design</button>
+    <button class="filter-btn" onclick="filterProjects('hvac')">HVAC Systems</button>
+    <button class="filter-btn" onclick="filterProjects('simulation')">FEA & CFD</button>
+    <button class="filter-btn" onclick="filterProjects('energy-controls')">Energy & Controls</button>
+  </div>
+
+  <!-- Projects Grid -->
+  <div class="projects-grid" id="projects-list">
+    
+    <!-- Project 1 -->
+    <div class="project-card" data-category="mechanical hvac simulation">
+      <div>
+        <div class="project-meta">
+          <span class="project-tag">// Capstone Project</span>
+          <span class="project-date">Sep 2025 – Jan 2026</span>
+        </div>
+        <h3 class="project-title">Sustainable Air Conditioning System</h3>
+        <p class="project-desc">
+          Designed, built, and tested a regenerative indirect evaporative cooling system using a four-stage metal plate heat exchanger. The system cooled air from about 36.98°C to 24.70°C while keeping product-air humidity reasonable, showing potential as a low-energy alternative to conventional AC.
+        </p>
+      </div>
+      <div>
+        <div class="project-tools">
+          <span class="tool-chip">SolidWorks CAD</span>
+          <span class="tool-chip">ANSYS CFD</span>
+          <span class="tool-chip">Thermodynamics</span>
+          <span class="tool-chip">Experimental Testing</span>
+        </div>
+        <a href="pdfs/SUSTAINABLE AIR CONDITIONING SYSTEM.pdf" target="_blank" class="btn-report">Open Project PDF</a>
+      </div>
+    </div>
+
+    <!-- Project 2 -->
+    <div class="project-card" data-category="mechanical simulation">
+      <div>
+        <div class="project-meta">
+          <span class="project-tag">// Structural Analysis</span>
+          <span class="project-date">May 2025</span>
+        </div>
+        <h3 class="project-title">Bicycle Wrench Simulation</h3>
+        <p class="project-desc">
+          Performed a static structural ANSYS analysis of a 2 mm stainless-steel bicycle wrench under a 50 N load. The study focused on finding the maximum deformation and von Mises stress under fixed boundary conditions.
+        </p>
+      </div>
+      <div>
+        <div class="project-tools">
+          <span class="tool-chip">ANSYS Mechanical</span>
+          <span class="tool-chip">FEA Sizing</span>
+          <span class="tool-chip">SolidWorks</span>
+          <span class="tool-chip">Stress Analysis</span>
+        </div>
+        <a href="pdfs/bicycle wrench simulation.pdf" target="_blank" class="btn-report">Open Project PDF</a>
+      </div>
+    </div>
+
+    <!-- Project 3 -->
+    <div class="project-card" data-category="energy-controls">
+      <div>
+        <div class="project-meta">
+          <span class="project-tag">// Control Systems</span>
+          <span class="project-date">Apr 2025</span>
+        </div>
+        <h3 class="project-title">Cruise Control System</h3>
+        <p class="project-desc">
+          Modeled a simplified vehicle cruise control system using state-space and transfer-function methods. MATLAB and Simulink were used to study open-loop response, poles/zeros, stability, and the need for PID control to improve speed regulation.
+        </p>
+      </div>
+      <div>
+        <div class="project-tools">
+          <span class="tool-chip">MATLAB</span>
+          <span class="tool-chip">Simulink</span>
+          <span class="tool-chip">Control Systems</span>
+          <span class="tool-chip">PID Control</span>
+        </div>
+        <a href="pdfs/Cruise Control System.pdf" target="_blank" class="btn-report">Open Project PDF</a>
+      </div>
+    </div>
+
+    <!-- Project 4 -->
+    <div class="project-card" data-category="simulation">
+      <div>
+        <div class="project-meta">
+          <span class="project-tag">// Fracture Mechanics</span>
+          <span class="project-date">Jun 2025</span>
+        </div>
+        <h3 class="project-title">Composite Plate Fracture Analysis</h3>
+        <p class="project-desc">
+          Analyzed composite plates with thicknesses of 0.3 mm, 0.5 mm, 1 mm, and 2 mm using ANSYS/FEM methods. The project studied stress intensity factors, crack growth, and fracture resistance, showing that thinner plates had higher stress concentration while thicker plates resisted fracture better.
+        </p>
+      </div>
+      <div>
+        <div class="project-tools">
+          <span class="tool-chip">ANSYS Mechanical</span>
+          <span class="tool-chip">FEA Simulation</span>
+          <span class="tool-chip">Fracture Mechanics</span>
+          <span class="tool-chip">Composites</span>
+        </div>
+        <a href="pdfs/Design and Analysis of fracture behaviour of composite plate in 4 different thickness.pdf" target="_blank" class="btn-report">Open Project PDF</a>
+      </div>
+    </div>
+
+    <!-- Project 5 -->
+    <div class="project-card" data-category="mechanical simulation">
+      <div>
+        <div class="project-meta">
+          <span class="project-tag">// Thermal Design</span>
+          <span class="project-date">Dec 2024</span>
+        </div>
+        <h3 class="project-title">Heatsink Design</h3>
+        <p class="project-desc">
+          Designed a CPU heat sink for a 110 W heat load with a maximum surface temperature of 60°C. Aluminum and copper fins were compared under natural and forced convection, and aluminum with a Noctua fan was selected because it was lighter and more cost-effective.
+        </p>
+      </div>
+      <div>
+        <div class="project-tools">
+          <span class="tool-chip">Heat Transfer</span>
+          <span class="tool-chip">SolidWorks CAD</span>
+          <span class="tool-chip">Convection</span>
+          <span class="tool-chip">Thermal Design</span>
+        </div>
+        <a href="pdfs/Heatsink Design.pdf" target="_blank" class="btn-report">Open Project PDF</a>
+      </div>
+    </div>
+
+    <!-- Project 6 -->
+    <div class="project-card" data-category="mechanical simulation">
+      <div>
+        <div class="project-meta">
+          <span class="project-tag">// ASME HPVC</span>
+          <span class="project-date">Sep 2024 – Feb 2025</span>
+        </div>
+        <h3 class="project-title">Human Powered Vehicle (HPV)</h3>
+        <p class="project-desc">
+          Designed and fabricated a recumbent delta tricycle following ASME HPVC guidelines. The project focused on stability, safety, RPS protection, manufacturability, cost control, and testing through FEA and CFD.
+        </p>
+      </div>
+      <div>
+        <div class="project-tools">
+          <span class="tool-chip">SolidWorks CAD</span>
+          <span class="tool-chip">ANSYS FEA</span>
+          <span class="tool-chip">CFD Aerodynamics</span>
+          <span class="tool-chip">ASME Guidelines</span>
+        </div>
+        <a href="pdfs/Human powered Vehicle (HPV).pdf" target="_blank" class="btn-report">Open Project PDF</a>
+      </div>
+    </div>
+
+    <!-- Project 7 -->
+    <div class="project-card" data-category="hvac">
+      <div>
+        <div class="project-meta">
+          <span class="project-tag">// HVAC Systems</span>
+          <span class="project-date">Nov – Dec 2025</span>
+        </div>
+        <h3 class="project-title">Hydronic Heating System Design</h3>
+        <p class="project-desc">
+          Designed a hydronic heating system for a building in Las Vegas using DesignBuilder for heat-loss estimation. Sized emitters and pipes, selected a 20 kW boiler for the 18.54 kW required load, and selected a pump for the required flow rate.
+        </p>
+      </div>
+      <div>
+        <div class="project-tools">
+          <span class="tool-chip">DesignBuilder</span>
+          <span class="tool-chip">Radiator Sizing</span>
+          <span class="tool-chip">Piping Design</span>
+          <span class="tool-chip">Boiler Sizing</span>
+        </div>
+        <a href="pdfs/Hydronic Heating System Design.pdf" target="_blank" class="btn-report">Open Project PDF</a>
+      </div>
+    </div>
+
+    <!-- Project 8 -->
+    <div class="project-card" data-category="hvac energy-controls">
+      <div>
+        <div class="project-meta">
+          <span class="project-tag">// Energy Systems</span>
+          <span class="project-date">Oct – Nov 2025</span>
+        </div>
+        <h3 class="project-title">PV System Design</h3>
+        <p class="project-desc">
+          Designed and simulated a photovoltaic system for a workshop building in Famagusta, North Cyprus. DesignBuilder was used to model the building, electricity demand, PV panels, and inverter selection to check whether the system could meet the annual energy demand.
+        </p>
+      </div>
+      <div>
+        <div class="project-tools">
+          <span class="tool-chip">DesignBuilder</span>
+          <span class="tool-chip">Solar PV</span>
+          <span class="tool-chip">Inverter Sizing</span>
+          <span class="tool-chip">Energy Modeling</span>
+        </div>
+        <a href="pdfs/PV SYSTEM DESIGN.pdf" target="_blank" class="btn-report">Open Project PDF</a>
+      </div>
+    </div>
+
+    <!-- Project 9 -->
+    <div class="project-card" data-category="mechanical simulation">
+      <div>
+        <div class="project-meta">
+          <span class="project-tag">// Mechanical Design</span>
+          <span class="project-date">Mar 2025</span>
+        </div>
+        <h3 class="project-title">Static Analysis of Shaft</h3>
+        <p class="project-desc">
+          Used ANSYS FEA to analyze a mechanical shaft under static loading. The project compared steel and aluminum shafts, studied deformation, von Mises stress, safety factor, and showed how increasing diameter and reducing length greatly improved stiffness and reduced stress.
+        </p>
+      </div>
+      <div>
+        <div class="project-tools">
+          <span class="tool-chip">ANSYS Mechanical</span>
+          <span class="tool-chip">FEA Sizing</span>
+          <span class="tool-chip">Shaft Design</span>
+          <span class="tool-chip">SolidWorks</span>
+        </div>
+        <a href="pdfs/Static analysis of shaft (Simulation).pdf" target="_blank" class="btn-report">Open Project PDF</a>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 <span>Tarik Tariq</span> — Mechanical Engineer</p>
+  <p>Famagusta, Cyprus &nbsp;·&nbsp; <span>tarik19951@gmail.com</span></p>
+</footer>
+
+<script>
+  function filterProjects(category) {
+    // Update active filter button class
+    const buttons = document.querySelectorAll('.filter-btn');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+
+    // Filter projects grid cards
+    const cards = document.querySelectorAll('#projects-list .project-card');
+    cards.forEach(card => {
+      const cats = card.getAttribute('data-category').split(' ');
+      if (category === 'all' || cats.includes(category)) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+</script>
+</body>
+</html>

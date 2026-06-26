@@ -1,0 +1,7 @@
+Place your image files for the Work Picture Catalog here.
+
+To show custom images in the gallery, place files with these names or update the image links in work-catalog/index.html:
+- kiln-inspection.jpg
+- cooler-cad.jpg
+- cfd-simulation.jpg
+- cnc-lathe.jpg

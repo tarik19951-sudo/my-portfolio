@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work Picture Catalog — Tarik Tariq</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gun:      #1A1F2E;
+    --gun-mid:  #232A3B;
+    --steel:    #8B9BAE;
+    --alum:     #C8D4E0;
+    --copper:   #C97240;
+    --copper-lt:#E08A58;
+    --offwhite: #EEF1F4;
+    --white:    #FFFFFF;
+    --mono: 'JetBrains Mono', monospace;
+    --display: 'Rajdhani', sans-serif;
+    --body: 'Inter', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--body);
+    background: var(--gun);
+    color: var(--alum);
+    overflow-x: hidden;
+    min-height: 100vh;
+    padding-bottom: 5rem;
+  }
+
+  /* Blueprint grid background */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(200,212,224,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,212,224,0.03) 1px, transparent 1px),
+      linear-gradient(rgba(200,212,224,0.01) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,212,224,0.01) 1px, transparent 1px);
+    background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 2.5rem;
+    background: rgba(26,31,46,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,212,224,0.08);
+  }
+  .nav-logo {
+    font-family: var(--display);
+    font-size: 1.25rem; font-weight: 700; letter-spacing: 0.12em;
+    color: var(--alum); text-decoration: none; text-transform: uppercase;
+  }
+  .nav-logo span { color: var(--copper); }
+  .back-link {
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em;
+    color: var(--steel); text-decoration: none; text-transform: uppercase;
+    transition: color 0.2s;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .back-link:hover { color: var(--copper); }
+
+  /* ── CONTAINER ── */
+  .container {
+    max-width: 1100px;
+    margin: 8rem auto 0;
+    padding: 0 2.5rem;
+  }
+
+  .header-block {
+    margin-bottom: 3.5rem;
+    position: relative;
+    border-left: 2px solid var(--copper);
+    padding-left: 1.5rem;
+  }
+  .eyebrow {
+    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.15em;
+    color: var(--copper); text-transform: uppercase; margin-bottom: 0.5rem;
+  }
+  .title {
+    font-family: var(--display); font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--white);
+  }
+  .subtitle {
+    font-size: 0.95rem; color: var(--steel); line-height: 1.75;
+    margin-top: 0.5rem; max-width: 600px;
+  }
+
+  /* ── GALLERY GRID ── */
+  .gallery-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .gallery-card {
+    background: rgba(200,212,224,0.03);
+    border: 1px solid rgba(200,212,224,0.08);
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.25s;
+    display: flex;
+    flex-direction: column;
+  }
+  .gallery-card:hover {
+    border-color: rgba(201,114,64,0.4);
+    transform: translateY(-2px);
+    background: rgba(200,212,224,0.05);
+  }
+
+  /* Image Box / Photo Holder */
+  .photo-container {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    width: 100%;
+    background: var(--gun-mid);
+    border-bottom: 1px solid rgba(200,212,224,0.08);
+    overflow: hidden;
+  }
+
+  /* Blueprint crosshair placeholder */
+  .blueprint-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    background-image: 
+      radial-gradient(circle at center, rgba(201,114,64,0.15) 1.5px, transparent 1.5px),
+      linear-gradient(rgba(200,212,224,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,212,224,0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 20px 20px, 20px 20px;
+  }
+  .blueprint-placeholder::before {
+    content: ''; position: absolute; width: 30px; height: 1px;
+    background: rgba(201,114,64,0.25);
+  }
+  .blueprint-placeholder::after {
+    content: ''; position: absolute; width: 1px; height: 30px;
+    background: rgba(201,114,64,0.25);
+  }
+  .blueprint-placeholder .label {
+    font-family: var(--mono); font-size: 0.6rem;
+    color: var(--steel); margin-top: 2.2rem;
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+
+  /* Actual picture loaded by user */
+  .photo-img {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .photo-img.loaded {
+    opacity: 1;
+  }
+
+  /* Card Text */
+  .card-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .card-meta {
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .card-tag {
+    font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.08em;
+    color: var(--copper); text-transform: uppercase;
+  }
+  .card-date {
+    font-family: var(--mono); font-size: 0.62rem; color: var(--steel);
+  }
+  .card-title {
+    font-family: var(--display); font-size: 1.25rem; font-weight: 700;
+    color: var(--white); text-transform: uppercase; letter-spacing: 0.03em;
+    margin-top: 0.2rem;
+  }
+  .card-desc {
+    font-size: 0.8rem; color: var(--steel); line-height: 1.6;
+  }
+
+  /* ── LIGHTBOX MODAL ── */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(26, 31, 46, 0.96);
+    backdrop-filter: blur(8px);
+    display: none;
+    align-items: center; justify-content: center;
+    padding: 2rem;
+  }
+  .lightbox.active {
+    display: flex;
+  }
+  .lightbox-content {
+    background: var(--gun);
+    border: 1px solid rgba(200,212,224,0.1);
+    max-width: 900px; width: 100%;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  }
+  
+  .lightbox-media {
+    background: var(--gun-mid);
+    position: relative;
+    aspect-ratio: 4 / 3;
+    display: flex; align-items: center; justify-content: center;
+    border-right: 1px solid rgba(200,212,224,0.08);
+  }
+  .lightbox-img {
+    width: 100%; height: 100%; object-fit: contain;
+    display: none;
+  }
+  .lightbox-img.active {
+    display: block;
+  }
+
+  .lightbox-info {
+    padding: 2.5rem;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .lightbox-close {
+    position: absolute; top: 1rem; right: 1rem;
+    background: none; border: none; color: var(--steel);
+    font-size: 1.5rem; cursor: pointer; transition: color 0.2s;
+    font-family: var(--mono);
+  }
+  .lightbox-close:hover {
+    color: var(--copper);
+  }
+
+  .lightbox-eyebrow {
+    font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.12em;
+    color: var(--copper); text-transform: uppercase; margin-bottom: 0.8rem;
+  }
+  .lightbox-title {
+    font-family: var(--display); font-size: 1.8rem; font-weight: 700;
+    color: var(--white); text-transform: uppercase; letter-spacing: 0.04em;
+    line-height: 1.2; margin-bottom: 1.2rem;
+  }
+  .lightbox-desc {
+    font-size: 0.9rem; color: rgba(200,212,224,0.75); line-height: 1.75;
+    margin-bottom: 1.5rem;
+  }
+  .lightbox-specs {
+    border-top: 1px solid rgba(200,212,224,0.08);
+    padding-top: 1rem;
+  }
+  .lightbox-spec-row {
+    display: flex; justify-content: space-between; font-size: 0.78rem;
+    padding: 0.4rem 0;
+  }
+  .lightbox-spec-label {
+    font-family: var(--mono); color: var(--steel); text-transform: uppercase;
+  }
+  .lightbox-spec-val {
+    color: var(--alum); font-weight: 500;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 8rem;
+    padding: 2rem 2.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(200,212,224,0.06);
+    background: rgba(26,31,46,0.3);
+  }
+  footer p {
+    font-family: var(--mono); font-size: 0.62rem;
+    color: var(--steel); letter-spacing: 0.08em;
+  }
+  footer span { color: var(--copper); }
+
+  @media (max-width: 768px) {
+    .container { margin-top: 6rem; padding: 0 1.5rem; }
+    .lightbox-content { grid-template-columns: 1fr; }
+    .lightbox-media { border-right: none; border-bottom: 1px solid rgba(200,212,224,0.08); }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="../index.html" class="nav-logo">T<span>.</span>Tariq</a>
+  <a href="../index.html" class="back-link">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+    Back to Main
+  </a>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+  
+  <div class="header-block">
+    <p class="eyebrow">// Hands-on Field & Engineering Gallery</p>
+    <h1 class="title">Work Picture Catalog</h1>
+    <p class="subtitle">
+      A visual catalog showcasing machinery inspections, lathe work, CAD assemblies, and CFD flow diagnostics. 
+      Click on any image to inspect details and descriptions.
+    </p>
+  </div>
+
+  <!-- Gallery Grid -->
+  <div class="gallery-grid">
+    
+    <!-- Item 1 -->
+    <div class="gallery-card" onclick="openLightbox(0)">
+      <div class="photo-container">
+        <div class="blueprint-placeholder">
+          <div class="label">[ KILN INSPECTION PHOTO ]</div>
+        </div>
+        <img class="photo-img" src="../assets/kiln-inspection.jpg" alt="Rotary Kiln Inspection" onload="imageLoaded(this)">
+      </div>
+      <div class="card-content">
+        <div class="card-meta">
+          <span class="card-tag">Bamburi Cement</span>
+          <span class="card-date">July 2025</span>
+        </div>
+        <h4 class="card-title">Rotary Kiln Alignment & Inspection</h4>
+        <p class="card-desc">Inspection of industrial rotary cement kiln support rollers and shell vibration parameters.</p>
+      </div>
+    </div>
+
+    <!-- Item 2 -->
+    <div class="gallery-card" onclick="openLightbox(1)">
+      <div class="photo-container">
+        <div class="blueprint-placeholder">
+          <div class="label">[ EVAPORATIVE COOLER CAD ]</div>
+        </div>
+        <img class="photo-img" src="../assets/cooler-cad.jpg" alt="Evaporative Cooler SolidWorks CAD" onload="imageLoaded(this)">
+      </div>
+      <div class="card-content">
+        <div class="card-meta">
+          <span class="card-tag">SolidWorks CAD</span>
+          <span class="card-date">October 2025</span>
+        </div>
+        <h4 class="card-title">Regenerative Cooler Assembly</h4>
+        <p class="card-desc">Complete SolidWorks design model showing internal duct flow geometries and heat exchanger mounting plates.</p>
+      </div>
+    </div>
+
+    <!-- Item 3 -->
+    <div class="gallery-card" onclick="openLightbox(2)">
+      <div class="photo-container">
+        <div class="blueprint-placeholder">
+          <div class="label">[ CFD FLOW VELOCITY ]</div>
+        </div>
+        <img class="photo-img" src="../assets/cfd-simulation.jpg" alt="ANSYS CFD Velocity Simulation" onload="imageLoaded(this)">
+      </div>
+      <div class="card-content">
+        <div class="card-meta">
+          <span class="card-tag">ANSYS CFD</span>
+          <span class="card-date">November 2025</span>
+        </div>
+        <h4 class="card-title">Velocity Streamlines in Exchanger Channel</h4>
+        <p class="card-desc">Turbulent kinetic energy and fluid streamline CFD plots mapping pressure boundary conditions.</p>
+      </div>
+    </div>
+
+    <!-- Item 4 -->
+    <div class="gallery-card" onclick="openLightbox(3)">
+      <div class="photo-container">
+        <div class="blueprint-placeholder">
+          <div class="label">[ CNC LATHE OPERATION ]</div>
+        </div>
+        <img class="photo-img" src="../assets/cnc-lathe.jpg" alt="Workshop Lathe Machine" onload="imageLoaded(this)">
+      </div>
+      <div class="card-content">
+        <div class="card-meta">
+          <span class="card-tag">EMU Workshop</span>
+          <span class="card-date">March 2024</span>
+        </div>
+        <h4 class="card-title">Mild Steel Shaft Turning</h4>
+        <p class="card-desc">Workshop lathe turning and surface finishing operations verifying shaft-keyway tight tolerances.</p>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- LIGHTBOX MODAL -->
+<div class="lightbox" id="lightboxModal">
+  <div class="lightbox-content">
+    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    <div class="lightbox-media" id="lightboxMediaContainer">
+      <!-- Media content dynamically injected by JS -->
+    </div>
+    <div class="lightbox-info">
+      <p class="lightbox-eyebrow" id="lbEyebrow">Location</p>
+      <h3 class="lightbox-title" id="lbTitle">Title</h3>
+      <p class="lightbox-desc" id="lbDesc">Detailed description goes here.</p>
+      <div class="lightbox-specs">
+        <div class="lightbox-spec-row">
+          <span class="lightbox-spec-label">Location / Tool</span>
+          <span class="lightbox-spec-val" id="lbSpecTool">EMU Lab</span>
+        </div>
+        <div class="lightbox-spec-row">
+          <span class="lightbox-spec-label">Date Recorded</span>
+          <span class="lightbox-spec-val" id="lbSpecDate">2025</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 <span>Tarik Tariq</span> — Mechanical Engineer</p>
+  <p>Famagusta, Cyprus &nbsp;·&nbsp; <span>tarik19951@gmail.com</span></p>
+</footer>
+
+<script>
+  // Catalog items dataset
+  const galleryData = [
+    {
+      title: "Rotary Kiln Alignment & Inspection",
+      eyebrow: "Field Maintenance Inspection",
+      desc: "Supported routine mechanical inspections of raw mills, kilns, crushers, and conveying gear systems at Bamburi Cement (Mombasa, Kenya). Inspected massive support roller assemblies for wear, monitored bearing temperature metrics, and checked belt drive alignments to diagnose vibration anomalies.",
+      tool: "Bamburi Cement Facility",
+      date: "July 2025",
+      imgSrc: "../assets/kiln-inspection.jpg",
+      placeholderLabel: "[ KILN INSPECTION PHOTO ]"
+    },
+    {
+      title: "Regenerative Evaporative Cooler Design",
+      eyebrow: "SolidWorks Mechanical Assembly",
+      desc: "Rendered a multi-layer regenerative cooling heat exchanger. Handled sheet metal panel sizing, designed internal channels supporting indirect evaporative air cooling cycles, and created standard technical manufacturing drawings (GD&T) to verify mounting fits.",
+      tool: "SolidWorks CAD",
+      date: "October 2025",
+      imgSrc: "../assets/cooler-cad.jpg",
+      placeholderLabel: "[ EVAPORATIVE COOLER CAD ]"
+    },
+    {
+      title: "Velocity Streamlines in Exchanger Channel",
+      eyebrow: "Fluid Simulation Diagnostic",
+      desc: "Ran subsonic fluid velocity profiles in ANSYS Fluent to analyze pressure drop penalties. Fine-tuned mesh sizing on the wall boundary layers to capture eddies and localized recirculation zones, optimizing air cooling channel parameters.",
+      tool: "ANSYS CFD (Fluent)",
+      date: "November 2025",
+      imgSrc: "../assets/cfd-simulation.jpg",
+      placeholderLabel: "[ CFD FLOW VELOCITY ]"
+    },
+    {
+      title: "Mild Steel Shaft Turning Operations",
+      eyebrow: "Machine Shop Machining",
+      desc: "Performed hands-on lathe operations to machine cylindrical steps on a mild steel shaft. Controlled cutter feed rates, measured diameter tolerance using vernier micrometers, and milled a keyway slot to meet class-fit specifications.",
+      tool: "EMU Machining Shop",
+      date: "March 2024",
+      imgSrc: "../assets/cnc-lathe.jpg",
+      placeholderLabel: "[ CNC LATHE OPERATION ]"
+    }
+  ];
+
+  // Callback to reveal image once fully loaded (instead of showing empty boxes while loading)
+  function imageLoaded(imgElement) {
+    imgElement.classList.add('loaded');
+  }
+
+  // Open Lightbox
+  function openLightbox(index) {
+    const data = galleryData[index];
+    const modal = document.getElementById('lightboxModal');
+    const container = document.getElementById('lightboxMediaContainer');
+    
+    // Setup labels
+    document.getElementById('lbEyebrow').innerText = data.eyebrow;
+    document.getElementById('lbTitle').innerText = data.title;
+    document.getElementById('lbDesc').innerText = data.desc;
+    document.getElementById('lbSpecTool').innerText = data.tool;
+    document.getElementById('lbSpecDate').innerText = data.date;
+
+    // Create the image element or placeholder in the lightbox depending on whether the source loaded
+    container.innerHTML = "";
+    
+    // We try to load the image inside the lightbox
+    const testImg = new Image();
+    testImg.src = data.imgSrc;
+    testImg.className = "lightbox-img active";
+    
+    testImg.onload = function() {
+      container.appendChild(testImg);
+    };
+    
+    testImg.onerror = function() {
+      // If the user hasn't added the file, show a beautiful blueprint placeholder inside the lightbox!
+      const pl = document.createElement('div');
+      pl.className = "blueprint-placeholder";
+      pl.innerHTML = `<div class="label" style="font-size: 0.8rem; margin-top: 2.2rem;">${data.placeholderLabel}</div>`;
+      container.appendChild(pl);
+    };
+
+    modal.classList.add('active');
+    document.body.style.overflow = "hidden"; // disable scroll
+  }
+
+  // Close Lightbox
+  function closeLightbox() {
+    const modal = document.getElementById('lightboxModal');
+    modal.classList.remove('active');
+    document.body.style.overflow = ""; // restore scroll
+  }
+
+  // Close modal on escape key
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+      closeLightbox();
+    }
+  });
+
+  // Close modal when clicking outside content area
+  document.getElementById('lightboxModal').addEventListener('click', function(event) {
+    if (event.target === this) {
+      closeLightbox();
+    }
+  });
+</script>
+</body>
+</html>

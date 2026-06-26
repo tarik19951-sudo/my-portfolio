@@ -1,0 +1,8 @@
+Place your University Lab Report PDF files in this folder. 
+
+Make sure the file names match what is linked in the lab-reports index.html, or update the links in lab-reports/index.html to match your files!
+
+For example:
+- meng353_fluid_mechanics_lab_1.pdf
+- meng344_thermodynamics_lab.pdf
+- meng410_capstone_proposal.pdf

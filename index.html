@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tarik Tariq — Mechanical Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gun:      #1A1F2E;
+    --gun-mid:  #232A3B;
+    --steel:    #8B9BAE;
+    --alum:     #C8D4E0;
+    --copper:   #C97240;
+    --copper-lt:#E08A58;
+    --offwhite: #EEF1F4;
+    --white:    #FFFFFF;
+    --mono: 'JetBrains Mono', monospace;
+    --display: 'Rajdhani', sans-serif;
+    --body: 'Inter', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--body);
+    background: var(--offwhite);
+    color: var(--gun);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 2.5rem;
+    background: rgba(26,31,46,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,212,224,0.08);
+  }
+  .nav-logo {
+    font-family: var(--display);
+    font-size: 1.25rem; font-weight: 700; letter-spacing: 0.12em;
+    color: var(--alum); text-decoration: none; text-transform: uppercase;
+  }
+  .nav-logo span { color: var(--copper); }
+  nav ul { list-style: none; display: flex; gap: 2rem; }
+  nav ul a {
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em;
+    color: var(--steel); text-decoration: none; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  nav ul a:hover { color: var(--copper); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: var(--gun);
+    position: relative;
+    display: flex; align-items: center;
+    overflow: hidden;
+    padding: 6rem 2.5rem 4rem;
+  }
+
+  /* Blueprint grid */
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(200,212,224,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,212,224,0.04) 1px, transparent 1px),
+      linear-gradient(rgba(200,212,224,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,212,224,0.015) 1px, transparent 1px);
+    background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
+    pointer-events: none;
+  }
+
+  /* Corner marks */
+  .hero::after {
+    content: '';
+    position: absolute; top: 5rem; left: 2.5rem; right: 2.5rem; bottom: 2rem;
+    border: 1px solid rgba(201,114,64,0.2);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    position: relative; z-index: 2;
+    max-width: 1100px; margin: 0 auto; width: 100%;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.15em;
+    color: var(--copper); text-transform: uppercase; margin-bottom: 1rem;
+  }
+
+  .hero-name {
+    font-family: var(--display);
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 700; line-height: 0.95;
+    color: var(--white); text-transform: uppercase; letter-spacing: 0.02em;
+    margin-bottom: 0.5rem;
+  }
+  .hero-name em { color: var(--copper); font-style: normal; display: block; }
+
+  .hero-title {
+    font-family: var(--display); font-size: 1.1rem; font-weight: 500;
+    color: var(--steel); letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .hero-desc {
+    font-size: 0.95rem; line-height: 1.75;
+    color: rgba(200,212,224,0.7); max-width: 480px; margin-bottom: 2.5rem;
+  }
+
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+  .btn {
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em;
+    text-transform: uppercase; text-decoration: none;
+    padding: 0.8rem 2rem; border: 1px solid;
+    transition: all 0.2s; cursor: pointer; display: inline-block;
+  }
+  .btn-primary {
+    background: var(--copper); border-color: var(--copper); color: var(--white);
+  }
+  .btn-primary:hover { background: var(--copper-lt); border-color: var(--copper-lt); }
+  .btn-ghost {
+    background: transparent; border-color: rgba(200,212,224,0.3); color: var(--alum);
+  }
+  .btn-ghost:hover { border-color: var(--copper); color: var(--copper); }
+
+  /* Spec card */
+  .hero-specs {
+    display: flex; flex-direction: column; gap: 1px;
+    background: rgba(200,212,224,0.06);
+    border: 1px solid rgba(200,212,224,0.1);
+    padding: 2rem;
+  }
+  .spec-item {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(200,212,224,0.06);
+  }
+  .spec-item:last-child { border-bottom: none; }
+  .spec-label {
+    font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em;
+    color: var(--steel); text-transform: uppercase;
+  }
+  .spec-value {
+    font-family: var(--display); font-size: 1rem; font-weight: 600;
+    color: var(--alum); text-align: right; max-width: 55%;
+  }
+  .spec-value.accent { color: var(--copper); }
+
+  /* ── SECTION SHELL ── */
+  section { padding: 6rem 2.5rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  .section-header {
+    display: flex; align-items: center; gap: 1.5rem; margin-bottom: 3.5rem;
+  }
+  .section-num {
+    font-family: var(--mono); font-size: 0.65rem; color: var(--copper);
+    letter-spacing: 0.1em;
+  }
+  .section-title {
+    font-family: var(--display); font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--gun);
+  }
+  .section-rule { flex: 1; height: 1px; background: rgba(26,31,46,0.12); }
+
+  /* dark section */
+  section.dark { background: var(--gun); }
+  section.dark .section-title { color: var(--alum); }
+  section.dark .section-rule { background: rgba(200,212,224,0.1); }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+  }
+  .about-text p {
+    font-size: 0.97rem; line-height: 1.85; color: #3a4455; margin-bottom: 1rem;
+  }
+  .about-text p:last-child { margin-bottom: 0; }
+  .about-edu {
+    background: var(--gun); color: var(--alum);
+    padding: 2rem;
+  }
+  .edu-badge {
+    font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em;
+    color: var(--copper); text-transform: uppercase; margin-bottom: 1.5rem;
+  }
+  .edu-school {
+    font-family: var(--display); font-size: 1.5rem; font-weight: 700;
+    color: var(--white); text-transform: uppercase; line-height: 1.1;
+    margin-bottom: 0.4rem;
+  }
+  .edu-degree {
+    font-family: var(--body); font-size: 0.85rem;
+    color: var(--steel); margin-bottom: 1.5rem; line-height: 1.5;
+  }
+  .edu-row {
+    display: flex; justify-content: space-between;
+    border-top: 1px solid rgba(200,212,224,0.08);
+    padding-top: 1rem; margin-top: 1rem;
+  }
+  .edu-stat-label {
+    font-family: var(--mono); font-size: 0.62rem; color: var(--steel);
+    text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.3rem;
+  }
+  .edu-stat-val {
+    font-family: var(--display); font-size: 1.4rem; font-weight: 700;
+    color: var(--copper);
+  }
+  .honors-list {
+    margin-top: 1.5rem; border-top: 1px solid rgba(200,212,224,0.08);
+    padding-top: 1rem;
+  }
+  .honor-tag {
+    display: inline-block; font-family: var(--mono); font-size: 0.6rem;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--gun);
+    background: var(--alum); padding: 0.25rem 0.6rem; margin: 0.2rem 0.2rem 0 0;
+  }
+
+  /* ── PROJECTS ── */
+  .projects-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  .project-card {
+    background: rgba(200,212,224,0.06);
+    border: 1px solid rgba(200,212,224,0.12);
+    padding: 2rem;
+    position: relative; overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .project-card:hover { border-color: rgba(201,114,64,0.4); transform: translateY(-2px); }
+  .project-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--copper); transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .project-card:hover::before { transform: scaleX(1); }
+  .project-tag {
+    font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em;
+    color: var(--copper); text-transform: uppercase; margin-bottom: 0.8rem;
+  }
+  .project-title {
+    font-family: var(--display); font-size: 1.25rem; font-weight: 700;
+    color: var(--alum); text-transform: uppercase; line-height: 1.2;
+    margin-bottom: 1rem; letter-spacing: 0.04em;
+  }
+  .project-desc {
+    font-size: 0.85rem; color: var(--steel); line-height: 1.75;
+    margin-bottom: 1.5rem;
+  }
+  .project-tools {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+  }
+  .tool-chip {
+    font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--alum); background: rgba(200,212,224,0.08);
+    border: 1px solid rgba(200,212,224,0.15);
+    padding: 0.2rem 0.55rem;
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+  .skill-group { }
+  .skill-group-label {
+    font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em;
+    color: var(--copper); text-transform: uppercase; margin-bottom: 1rem;
+    padding-bottom: 0.6rem; border-bottom: 1px solid rgba(200,212,224,0.1);
+  }
+  .skill-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid rgba(200,212,224,0.06);
+  }
+  .skill-name {
+    font-size: 0.85rem; color: var(--alum);
+  }
+  .skill-bar {
+    width: 60px; height: 3px; background: rgba(200,212,224,0.12);
+    position: relative; overflow: hidden;
+  }
+  .skill-bar-fill {
+    position: absolute; top: 0; left: 0; bottom: 0;
+    background: var(--copper); transition: width 0.8s ease;
+  }
+
+  /* ── EXPERIENCE ── */
+  .exp-block {
+    border-left: 2px solid rgba(201,114,64,0.3);
+    padding-left: 2rem; position: relative; margin-bottom: 3rem;
+  }
+  .exp-block::before {
+    content: '';
+    position: absolute; left: -5px; top: 0.4rem;
+    width: 8px; height: 8px; background: var(--copper);
+    transform: rotate(45deg);
+  }
+  .exp-date {
+    font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em;
+    color: var(--copper); text-transform: uppercase; margin-bottom: 0.5rem;
+  }
+  .exp-role {
+    font-family: var(--display); font-size: 1.5rem; font-weight: 700;
+    color: var(--white); text-transform: uppercase; margin-bottom: 0.2rem;
+  }
+  .exp-company {
+    font-size: 0.85rem; color: var(--steel); margin-bottom: 1rem;
+  }
+  .exp-bullets {
+    list-style: none; display: flex; flex-direction: column; gap: 0.6rem;
+  }
+  .exp-bullets li {
+    font-size: 0.87rem; color: rgba(200,212,224,0.7); line-height: 1.6;
+    display: flex; gap: 0.75rem;
+  }
+  .exp-bullets li::before {
+    content: '→';
+    color: var(--copper); flex-shrink: 0; margin-top: 0.05rem;
+  }
+
+  /* ── CONTACT ── */
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+  }
+  .contact-headline {
+    font-family: var(--display); font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 700; text-transform: uppercase; line-height: 1;
+    color: var(--gun); margin-bottom: 1.5rem;
+  }
+  .contact-headline em { color: var(--copper); font-style: normal; }
+  .contact-sub {
+    font-size: 0.95rem; color: #3a4455; line-height: 1.75;
+  }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-link {
+    display: flex; align-items: center; gap: 1rem;
+    text-decoration: none; padding: 1.2rem 1.5rem;
+    border: 1px solid rgba(26,31,46,0.1);
+    transition: border-color 0.2s, background 0.2s;
+    background: var(--white);
+  }
+  .contact-link:hover { border-color: var(--copper); background: rgba(201,114,64,0.03); }
+  .contact-link-icon {
+    width: 36px; height: 36px; background: var(--gun);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .contact-link-icon svg { fill: var(--copper); }
+  .contact-link-label {
+    font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em;
+    color: var(--steel); text-transform: uppercase; margin-bottom: 0.2rem;
+  }
+  .contact-link-val {
+    font-size: 0.88rem; color: var(--gun); font-weight: 500;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--gun); padding: 2rem 2.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(200,212,224,0.06);
+  }
+  footer p {
+    font-family: var(--mono); font-size: 0.62rem;
+    color: var(--steel); letter-spacing: 0.08em;
+  }
+  footer span { color: var(--copper); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .hero-inner, .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-specs { order: -1; }
+    nav ul { display: none; }
+    section { padding: 4rem 1.5rem; }
+    hero { padding: 5rem 1.5rem 3rem; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+
+  /* ── VIDEO SHOWCASE ── */
+  .video-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  .video-main {
+    background: rgba(200,212,224,0.03);
+    border: 1px solid rgba(200,212,224,0.12);
+    padding: 1.5rem;
+    position: relative;
+  }
+  .video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+    background: #000;
+    border: 1px solid rgba(200,212,224,0.15);
+  }
+  .video-container iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+  }
+  .video-details {
+    margin-top: 1.5rem;
+  }
+  .video-tag {
+    font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em;
+    color: var(--copper); text-transform: uppercase;
+  }
+  .video-title {
+    font-family: var(--display); font-size: 1.5rem; font-weight: 700;
+    color: var(--white); text-transform: uppercase; letter-spacing: 0.04em;
+    margin: 0.4rem 0 0.8rem;
+  }
+  .video-desc {
+    font-size: 0.9rem;
+    color: rgba(200,212,224,0.7);
+    line-height: 1.7;
+  }
+  .video-playlist {
+    background: rgba(200,212,224,0.03);
+    border: 1px solid rgba(200,212,224,0.12);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-height: 480px;
+    overflow-y: auto;
+  }
+  .playlist-title {
+    font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em;
+    color: var(--copper); text-transform: uppercase;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(200,212,224,0.12);
+  }
+  .playlist-item {
+    display: flex;
+    gap: 1rem;
+    padding: 0.8rem;
+    background: rgba(26,31,46,0.5);
+    border: 1px solid rgba(200,212,224,0.06);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .playlist-item:hover, .playlist-item.active {
+    border-color: var(--copper);
+    background: rgba(201,114,64,0.06);
+  }
+  .playlist-item-num {
+    font-family: var(--mono); font-size: 0.72rem; color: var(--steel);
+    padding-top: 0.2rem;
+  }
+  .playlist-item.active .playlist-item-num {
+    color: var(--copper);
+  }
+  .playlist-item-info {
+    flex: 1;
+  }
+  .playlist-item-title {
+    font-family: var(--display); font-size: 0.95rem; font-weight: 600;
+    color: var(--alum); text-transform: uppercase; letter-spacing: 0.02em;
+  }
+  .playlist-item.active .playlist-item-title {
+    color: var(--white);
+  }
+  .playlist-item-duration {
+    font-family: var(--mono); font-size: 0.6rem; color: var(--steel);
+    margin-top: 0.2rem;
+  }
+
+  @media (max-width: 768px) {
+    .video-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  }
+
+  /* ── LAB REPORTS SECTION (LIGHT) ── */
+  .lab-filters {
+    display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2rem;
+  }
+  .lab-filter-btn {
+    font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em;
+    text-transform: uppercase; background: rgba(26,31,46,0.03);
+    border: 1px solid rgba(26,31,46,0.08); color: var(--steel);
+    padding: 0.5rem 1.2rem; cursor: pointer; transition: all 0.2s;
+  }
+  .lab-filter-btn:hover, .lab-filter-btn.active {
+    background: var(--copper); border-color: var(--copper); color: var(--white);
+  }
+
+  .lab-table-container {
+    background: var(--white);
+    border: 1px solid rgba(26,31,46,0.08);
+    overflow-x: auto;
+    position: relative;
+  }
+  .lab-table-container::before {
+    content: '';
+    position: absolute; top: 0; left: 0; width: 6px; height: 6px;
+    border-top: 1px solid var(--copper); border-left: 1px solid var(--copper);
+  }
+  .lab-table-container::after {
+    content: '';
+    position: absolute; bottom: 0; right: 0; width: 6px; height: 6px;
+    border-bottom: 1px solid var(--copper); border-right: 1px solid var(--copper);
+  }
+
+  .lab-table-container table {
+    width: 100%; border-collapse: collapse; text-align: left;
+    min-width: 700px;
+  }
+  .lab-table-container th {
+    font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--steel);
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid rgba(26,31,46,0.1);
+    background: rgba(26,31,46,0.02);
+  }
+  .lab-table-container td {
+    padding: 1.2rem 1.5rem;
+    font-size: 0.9rem;
+    border-bottom: 1px solid rgba(26,31,46,0.05);
+    vertical-align: middle;
+    transition: background 0.15s;
+    color: var(--gun);
+  }
+  .lab-table-container tr:hover td {
+    background: rgba(26,31,46,0.015);
+  }
+
+  .lab-course-code {
+    font-family: var(--mono); font-size: 0.75rem; font-weight: 500;
+    color: var(--copper);
+  }
+  .lab-report-title {
+    font-family: var(--display); font-size: 1.15rem; font-weight: 600;
+    color: var(--gun); text-transform: uppercase; letter-spacing: 0.03em;
+  }
+  .lab-report-desc {
+    font-size: 0.78rem; color: #5a6578; margin-top: 0.2rem;
+    font-family: var(--body);
+  }
+  .lab-date-val {
+    font-family: var(--mono); font-size: 0.72rem; color: var(--steel);
+  }
+  .lab-grade-badge {
+    display: inline-block; font-family: var(--mono); font-size: 0.75rem;
+    font-weight: 600; text-transform: uppercase; color: var(--gun);
+    background: var(--alum); padding: 0.2rem 0.5rem; border-radius: 2px;
+    text-align: center; min-width: 2.2rem;
+  }
+  .lab-grade-badge.excellent {
+    background: var(--copper); color: var(--white);
+  }
+  .lab-btn-download {
+    font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.08em;
+    text-transform: uppercase; text-decoration: none;
+    padding: 0.5rem 1rem; border: 1px solid rgba(26,31,46,0.15);
+    color: var(--gun); transition: all 0.2s; display: inline-block;
+    cursor: pointer;
+  }
+  .lab-btn-download:hover {
+    border-color: var(--copper); color: var(--copper);
+    background: rgba(201,114,64,0.05);
+  }
+
+  /* ── MODAL STYLES ── */
+  .modal-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 200;
+    background: rgba(26, 31, 46, 0.85);
+    backdrop-filter: blur(8px);
+    display: flex; justify-content: center; align-items: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+    padding: 1.5rem;
+  }
+  .modal-overlay.active {
+    opacity: 1; pointer-events: auto;
+  }
+  .modal-container {
+    background: var(--gun-mid);
+    border: 1px solid rgba(200, 212, 224, 0.15);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    max-width: 650px; width: 100%;
+    position: relative;
+    padding: 2.5rem;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+  }
+  .modal-overlay.active .modal-container {
+    transform: translateY(0);
+  }
+  /* Corner marks for blueprint theme */
+  .modal-container::before {
+    content: '';
+    position: absolute; top: 0; left: 0; width: 8px; height: 8px;
+    border-top: 2px solid var(--copper); border-left: 2px solid var(--copper);
+  }
+  .modal-container::after {
+    content: '';
+    position: absolute; bottom: 0; right: 0; width: 8px; height: 8px;
+    border-bottom: 2px solid var(--copper); border-right: 2px solid var(--copper);
+  }
+  .modal-close {
+    position: absolute; top: 1.25rem; right: 1.25rem;
+    background: transparent; border: none;
+    color: var(--steel); font-size: 1.5rem; cursor: pointer;
+    transition: color 0.2s;
+    width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+  }
+  .modal-close:hover { color: var(--copper); }
+  
+  .modal-header { margin-bottom: 1.5rem; }
+  .modal-course {
+    font-family: var(--mono); font-size: 0.72rem; color: var(--copper);
+    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem;
+  }
+  .modal-title {
+    font-family: var(--display); font-size: 1.6rem; font-weight: 700;
+    color: var(--white); text-transform: uppercase; letter-spacing: 0.04em;
+    line-height: 1.2;
+  }
+  
+  .modal-meta-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    border-top: 1px solid rgba(200, 212, 224, 0.08);
+    border-bottom: 1px solid rgba(200, 212, 224, 0.08);
+    padding: 1rem 0; margin-bottom: 1.5rem;
+  }
+  .modal-meta-item { display: flex; gap: 0.5rem; align-items: baseline; }
+  .modal-meta-label {
+    font-family: var(--mono); font-size: 0.65rem; color: var(--steel);
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .modal-meta-val {
+    font-family: var(--display); font-size: 1rem; font-weight: 600; color: var(--alum);
+  }
+  .modal-meta-val.grade { color: var(--copper); }
+  
+  .modal-body {
+    font-size: 0.92rem; line-height: 1.75; color: rgba(200, 212, 224, 0.8);
+    margin-bottom: 2rem;
+  }
+  .modal-footer { display: flex; gap: 1rem; justify-content: flex-end; }
+
+  #labs-list-body tr { cursor: pointer; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">T<span>.</span>Tariq</a>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#lab-reports">Lab Reports</a></li>
+    <li><a href="./work-catalog/index.html">Work Catalog</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <p class="hero-eyebrow">// Portfolio — Mechanical Engineer</p>
+      <h1 class="hero-name">Tarik<em>Tariq</em></h1>
+      <p class="hero-title">Mechanical Engineer</p>
+      <p class="hero-desc">
+        Designing systems that move, cool, flow, and endure. Specialising in
+        thermal-fluid engineering, CAD/CFD simulation, and sustainable HVAC solutions —
+        with hands-on industrial experience and a 3.64 GPA to back it up.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+      </div>
+    </div>
+
+    <div class="hero-specs">
+      <div class="spec-item">
+        <span class="spec-label">University</span>
+        <span class="spec-value">Eastern Mediterranean Univ.</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">Degree</span>
+        <span class="spec-value">BS Mechanical Engineering</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">Accreditation</span>
+        <span class="spec-value accent">ABET</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">CGPA</span>
+        <span class="spec-value accent">3.64 / 4.0</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">Graduation</span>
+        <span class="spec-value">July 2026</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">Location</span>
+        <span class="spec-value">Famagusta, Cyprus</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">Honors</span>
+        <span class="spec-value accent">4× Higher Honors</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">About</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm a final-year Mechanical Engineering student at Eastern Mediterranean University, 
+          building expertise across thermal systems, fluid mechanics, HVAC design, and CAD/CFD 
+          simulation. My approach bridges precision engineering analysis with practical, 
+          real-world problem-solving.
+        </p>
+        <p>
+          From designing a regenerative indirect evaporative cooler to performing CFD analysis 
+          in ANSYS and hands-on maintenance at a large cement manufacturing facility, I've 
+          developed the ability to move fluently between simulation, design, and the shop floor.
+        </p>
+        <p>
+          I'm open to roles across the full spectrum of mechanical engineering — from thermal 
+          and energy systems to manufacturing, maintenance, and industrial operations. What 
+          drives me is solving hard problems with rigour and precision.
+        </p>
+      </div>
+      <div class="about-edu">
+        <div class="edu-badge">// Education</div>
+        <div class="edu-school">Eastern<br>Mediterranean<br>University</div>
+        <div class="edu-degree">BS Mechanical Engineering (ABET Accredited)<br>Famagusta, Cyprus · 2023 – 2026</div>
+        <div class="edu-row">
+          <div>
+            <div class="edu-stat-label">CGPA</div>
+            <div class="edu-stat-val">3.64</div>
+          </div>
+          <div>
+            <div class="edu-stat-label">Exp. Graduation</div>
+            <div class="edu-stat-val" style="font-size:1rem; padding-top:0.35rem;">July 2026</div>
+          </div>
+        </div>
+        <div class="honors-list">
+          <div class="edu-stat-label" style="margin-bottom:0.5rem;">Academic Awards</div>
+          <span class="honor-tag">Higher Honors — Fall '25</span>
+          <span class="honor-tag">Higher Honors — Spring '25</span>
+          <span class="honor-tag">Higher Honors — Fall '24</span>
+          <span class="honor-tag">Higher Honors — Spring '24</span>
+          <span class="honor-tag">Honors — Fall '23</span>
+        </div>
+        <a href="#lab-reports" class="btn btn-ghost" style="width: 100%; text-align: center; margin-top: 1.5rem; border-color: rgba(200,212,224,0.15); font-size: 0.65rem; padding: 0.6rem;">Browse Lab Reports Section</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="dark">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Projects</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="projects-grid">
+
+      <div class="project-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <div class="project-tag">// Capstone Project · Sep 2025 – Jan 2026</div>
+          <div class="project-title">Sustainable Air Conditioning System</div>
+          <p class="project-desc">
+            Designed, built, and tested a regenerative indirect evaporative cooling (RIEC) system using a four-stage metal plate heat exchanger. The prototype successfully cooled air from 36.98°C to 24.70°C while keeping humidity reasonable, proving its potential as a low-energy AC alternative.
+          </p>
+        </div>
+        <div>
+          <div class="project-tools" style="margin-bottom: 1.5rem;">
+            <span class="tool-chip">SolidWorks CAD</span>
+            <span class="tool-chip">ANSYS CFD</span>
+            <span class="tool-chip">Thermodynamics</span>
+            <span class="tool-chip">Heat Exchangers</span>
+          </div>
+          <a href="./projects/pdfs/SUSTAINABLE AIR CONDITIONING SYSTEM.pdf" target="_blank" class="btn btn-ghost" style="width: 100%; text-align: center; padding: 0.5rem; font-size: 0.65rem;">Open PDF Report</a>
+        </div>
+      </div>
+
+      <div class="project-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <div class="project-tag">// Structural Analysis · May 2025</div>
+          <div class="project-title">Bicycle Wrench Simulation</div>
+          <p class="project-desc">
+            Performed a static structural ANSYS finite element analysis (FEA) of a 2 mm stainless-steel bicycle wrench under a 50 N hand load. Determined maximum stress concentration, von Mises stress, and structural deformation under fixed boundary conditions.
+          </p>
+        </div>
+        <div>
+          <div class="project-tools" style="margin-bottom: 1.5rem;">
+            <span class="tool-chip">ANSYS Mechanical</span>
+            <span class="tool-chip">FEA Sizing</span>
+            <span class="tool-chip">SolidWorks</span>
+            <span class="tool-chip">Stress Analysis</span>
+          </div>
+          <a href="./projects/pdfs/bicycle wrench simulation.pdf" target="_blank" class="btn btn-ghost" style="width: 100%; text-align: center; padding: 0.5rem; font-size: 0.65rem;">Open PDF Report</a>
+        </div>
+      </div>
+
+      <div class="project-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <div class="project-tag">// HVAC Systems · Nov – Dec 2025</div>
+          <div class="project-title">Hydronic Heating System Design</div>
+          <p class="project-desc">
+            Designed a complete hydronic heating system for a building in Las Vegas using DesignBuilder for precise heat-loss estimation. Sized emitters, pipes, expansion vessel, and pump for the required 18.54 kW load, selecting a matching 20 kW boiler.
+          </p>
+        </div>
+        <div>
+          <div class="project-tools" style="margin-bottom: 1.5rem;">
+            <span class="tool-chip">DesignBuilder</span>
+            <span class="tool-chip">HVAC Sizing</span>
+            <span class="tool-chip">Piping Design</span>
+            <span class="tool-chip">Boiler Sizing</span>
+          </div>
+          <a href="./projects/pdfs/Hydronic Heating System Design.pdf" target="_blank" class="btn btn-ghost" style="width: 100%; text-align: center; padding: 0.5rem; font-size: 0.65rem;">Open PDF Report</a>
+        </div>
+      </div>
+
+      <div class="project-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <div class="project-tag">// Vehicle Design · Sep 2024 – Feb 2025</div>
+          <div class="project-title">Human Powered Vehicle (HPV)</div>
+          <p class="project-desc">
+            Co-designed and fabricated a recumbent delta tricycle following ASME HPVC guidelines. Focused on roll-over protection (RPS) safety, stability, cost control, and frame stress-testing using FEA and aerodynamic CFD simulation.
+          </p>
+        </div>
+        <div>
+          <div class="project-tools" style="margin-bottom: 1.5rem;">
+            <span class="tool-chip">SolidWorks CAD</span>
+            <span class="tool-chip">ANSYS FEA</span>
+            <span class="tool-chip">CFD Aerodynamics</span>
+            <span class="tool-chip">ASME Rules</span>
+          </div>
+          <a href="./projects/pdfs/Human powered Vehicle (HPV).pdf" target="_blank" class="btn btn-ghost" style="width: 100%; text-align: center; padding: 0.5rem; font-size: 0.65rem;">Open PDF Report</a>
+        </div>
+      </div>
+
+    </div>
+    <div style="text-align: center; margin-top: 4rem;">
+      <a href="./projects/index.html" class="btn btn-ghost">Browse Full Projects Library</a>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO SHOWCASE -->
+<section id="video-showcase" class="dark">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Video Demonstrations</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="video-grid">
+      <div class="video-main">
+        <div class="video-container">
+          <iframe id="mainYoutubePlayer" src="https://www.youtube.com/embed/GRbaWa__fsE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <div class="video-details">
+          <span class="video-tag" id="mainVideoTag">// Vehicle Design · ASME HPVC</span>
+          <h3 class="video-title" id="mainVideoTitle">Human Powered Vehicle (HPV)</h3>
+          <p class="video-desc" id="mainVideoDesc">
+            A full walkthrough of our Human Powered Vehicle project — a recumbent delta tricycle designed and fabricated following ASME HPVC guidelines. Covers the structural design, roll-over protection, FEA validation, aerodynamic CFD analysis, and physical build process.
+          </p>
+        </div>
+      </div>
+      <div class="video-playlist">
+        <div class="playlist-title">// Video Playlist</div>
+        <div class="playlist-item active" onclick="loadVideo('GRbaWa__fsE', 'Human Powered Vehicle (HPV)', 'A full walkthrough of our Human Powered Vehicle project — a recumbent delta tricycle designed and fabricated following ASME HPVC guidelines. Covers the structural design, roll-over protection, FEA validation, aerodynamic CFD analysis, and physical build process.', '// Vehicle Design · ASME HPVC')">
+          <div class="playlist-item-num">01</div>
+          <div class="playlist-item-info">
+            <div class="playlist-item-title">Human Powered Vehicle (HPV)</div>
+            <div class="playlist-item-duration">// ASME HPVC Project</div>
+          </div>
+        </div>
+        <div class="playlist-item" style="opacity: 0.45; cursor: default;" title="Video coming soon">
+          <div class="playlist-item-num">02</div>
+          <div class="playlist-item-info">
+            <div class="playlist-item-title">Coming Soon</div>
+            <div class="playlist-item-duration">// Add your next video</div>
+          </div>
+        </div>
+        <div class="playlist-item" style="opacity: 0.45; cursor: default;" title="Video coming soon">
+          <div class="playlist-item-num">03</div>
+          <div class="playlist-item-info">
+            <div class="playlist-item-title">Coming Soon</div>
+            <div class="playlist-item-duration">// Add your next video</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LAB REPORTS -->
+<section id="lab-reports">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title">University Lab Reports</h2>
+      <div class="section-rule"></div>
+    </div>
+    
+    <p style="font-size: 0.95rem; color: #3a4455; line-height: 1.75; margin-bottom: 2.5rem; max-width: 700px;">
+      Laboratory reports and experimental analyses completed during my BS in Mechanical Engineering 
+      at Eastern Mediterranean University. Click to open each report as a PDF.
+    </p>
+
+    <!-- Filters -->
+    <div class="lab-filters">
+      <button class="lab-filter-btn active" onclick="filterLabs('all')">All Courses</button>
+      <button class="lab-filter-btn" onclick="filterLabs('thermo')">Thermodynamics</button>
+      <button class="lab-filter-btn" onclick="filterLabs('heat-transfer')">Heat Transfer</button>
+      <button class="lab-filter-btn" onclick="filterLabs('mechanics')">Mechanics of Materials</button>
+      <button class="lab-filter-btn" onclick="filterLabs('energy')">Energy Systems</button>
+    </div>
+
+    <!-- Table -->
+    <div class="lab-table-container">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 15%;">Course</th>
+            <th style="width: 50%;">Report Details</th>
+            <th style="width: 15%;">Term</th>
+            <th style="width: 10%;">Grade</th>
+            <th style="width: 10%;">Details</th>
+          </tr>
+        </thead>
+        <tbody id="labs-list-body">
+          <tr data-category="thermo" data-pdf="./lab-reports/pdfs/Wet Cooling Tower.pdf" data-description="Experimental analysis of a wet cooling tower using thermodynamic calculations and psychrometric chart readings. The work compared air and water mass flow rates and showed how different methods can give different performance results." onclick="openLabModal(this)">
+            <td class="lab-course-code">MENG 344</td>
+            <td>
+              <div class="lab-report-title">Wet Cooling Tower Performance</div>
+              <div class="lab-report-desc">Thermodynamic analysis comparing air and water mass flow rates using psychrometric charts.</div>
+            </td>
+            <td class="lab-date-val">Fall 2025</td>
+            <td><span class="lab-grade-badge excellent">A</span></td>
+            <td><button class="lab-btn-download" style="background:transparent; border:1px solid rgba(26,31,46,0.15);">View Details</button></td>
+          </tr>
+          <tr data-category="thermo" data-pdf="./lab-reports/pdfs/Air conditioning.pdf" data-description="Tested the Argemsan K-212 heat recovery air handling unit during heating and cooling processes. The experiment showed how the unit changes temperature and relative humidity while recovering energy from exhaust air." onclick="openLabModal(this)">
+            <td class="lab-course-code">MENG 443</td>
+            <td>
+              <div class="lab-report-title">Argemsan K-212 Air Conditioning Testing</div>
+              <div class="lab-report-desc">Energy recovery and psychrometric performance study of a heat recovery air handling unit.</div>
+            </td>
+            <td class="lab-date-val">Fall 2025</td>
+            <td><span class="lab-grade-badge excellent">A</span></td>
+            <td><button class="lab-btn-download" style="background:transparent; border:1px solid rgba(26,31,46,0.15);">View Details</button></td>
+          </tr>
+          <tr data-category="heat-transfer" data-pdf="./lab-reports/pdfs/Combined Forced Convection and Radiation.pdf" data-description="Studied heat loss from a heated cylinder under different air velocities. As air velocity increased, forced convection became stronger, while radiation became less dominant due to lower surface temperature." onclick="openLabModal(this)">
+            <td class="lab-course-code">MENG 345</td>
+            <td>
+              <div class="lab-report-title">Combined Forced Convection & Radiation</div>
+              <div class="lab-report-desc">Analysis of velocity-dependent heat loss profiles and mode dominance on a heated cylinder.</div>
+            </td>
+            <td class="lab-date-val">Fall 2025</td>
+            <td><span class="lab-grade-badge excellent">A</span></td>
+            <td><button class="lab-btn-download" style="background:transparent; border:1px solid rgba(26,31,46,0.15);">View Details</button></td>
+          </tr>
+          <tr data-category="mechanics" data-pdf="./lab-reports/pdfs/Deflection of Beams.pdf" data-description="Compared theoretical and experimental deflection of simply supported steel beams and cantilever aluminum beams. The results showed a mostly linear relationship between load position and deflection, but with some differences between theory and experiment." onclick="openLabModal(this)">
+            <td class="lab-course-code">MENG 244</td>
+            <td>
+              <div class="lab-report-title">Deflection of Structural Beams</div>
+              <div class="lab-report-desc">Experimental and analytical elastic deflection study of steel and aluminum beam geometries.</div>
+            </td>
+            <td class="lab-date-val">Spring 2025</td>
+            <td><span class="lab-grade-badge">A-</span></td>
+            <td><button class="lab-btn-download" style="background:transparent; border:1px solid rgba(26,31,46,0.15);">View Details</button></td>
+          </tr>
+          <tr data-category="energy" data-pdf="./lab-reports/pdfs/Determining instant electrical and thermal power output of a PVT system.pdf" data-description="Measured the instant electrical and thermal output of a photovoltaic-thermal system at different tilt angles. The highest electrical and thermal power occurred at 15°, while the calculated best tilt angle for Famagusta was about 12°–13°." onclick="openLabModal(this)">
+            <td class="lab-course-code">MENG 447</td>
+            <td>
+              <div class="lab-report-title">PVT System Power Output</div>
+              <div class="lab-report-desc">Experimental optimization of electrical and thermal output of a hybrid solar PVT panel.</div>
+            </td>
+            <td class="lab-date-val">Spring 2025</td>
+            <td><span class="lab-grade-badge excellent">A</span></td>
+            <td><button class="lab-btn-download" style="background:transparent; border:1px solid rgba(26,31,46,0.15);">View Details</button></td>
+          </tr>
+          <tr data-category="thermo" data-pdf="./lab-reports/pdfs/Electric boiler.pdf" data-description="Studied how water changes into steam in an electric kettle by measuring water volume, boiling time, temperature change, and energy input. The report used enthalpy calculations and a T-v diagram to estimate boiler power and understand phase change." onclick="openLabModal(this)">
+            <td class="lab-course-code">MENG 340</td>
+            <td>
+              <div class="lab-report-title">Electric Boiler Phase Change</div>
+              <div class="lab-report-desc">Analysis of liquid-vapor phase transition and transient thermal efficiency of an electric kettle.</div>
+            </td>
+            <td class="lab-date-val">Spring 2025</td>
+            <td><span class="lab-grade-badge excellent">A</span></td>
+            <td><button class="lab-btn-download" style="background:transparent; border:1px solid rgba(26,31,46,0.15);">View Details</button></td>
+          </tr>
+          <tr data-category="heat-transfer" data-pdf="./lab-reports/pdfs/Steady State Conduction Through a Uniform Wall.pdf" data-description="Verified Fourier’s law using a heat conduction experiment through a uniform wall. The results showed that higher heat transfer rate produced larger temperature differences, confirming the link between heat flux and temperature gradient." onclick="openLabModal(this)">
+            <td class="lab-course-code">MENG 345</td>
+            <td>
+              <div class="lab-report-title">Steady-State Conduction Study</div>
+              <div class="lab-report-desc">Verification of Fourier's law of heat conduction through uniform solid wall blocks.</div>
+            </td>
+            <td class="lab-date-val">Fall 2025</td>
+            <td><span class="lab-grade-badge excellent">A</span></td>
+            <td><button class="lab-btn-download" style="background:transparent; border:1px solid rgba(26,31,46,0.15);">View Details</button></td>
+          </tr>
+          <tr data-category="thermo" data-pdf="./lab-reports/pdfs/The heat engine.pdf" data-description="Used the PASCO heat engine apparatus to study how heat can be converted into work. The experiment measured pressure-volume changes, plotted a P-V diagram, and calculated both thermodynamic and mechanical work." onclick="openLabModal(this)">
+            <td class="lab-course-code">MENG 340</td>
+            <td>
+              <div class="lab-report-title">PASCO Heat Engine Study</div>
+              <div class="lab-report-desc">Pressure-Volume thermodynamic cycle measurements and mechanical efficiency calculation.</div>
+            </td>
+            <td class="lab-date-val">Spring 2025</td>
+            <td><span class="lab-grade-badge excellent">A</span></td>
+            <td><button class="lab-btn-download" style="background:transparent; border:1px solid rgba(26,31,46,0.15);">View Details</button></td>
+          </tr>
+          <tr data-category="mechanics" data-pdf="./lab-reports/pdfs/Torsion test.pdf" data-description="Tested a material under twisting load to study torque, angle of twist, shear stress, and modulus of rigidity. The experiment found large differences between theoretical and experimental modulus values, showing the importance of careful measurement and error analysis." onclick="openLabModal(this)">
+            <td class="lab-course-code">MENG 244</td>
+            <td>
+              <div class="lab-report-title">Torsion Testing of Metals</div>
+              <div class="lab-report-desc">Torsional stress, shear modulus (rigidity), and experimental elastic error analysis.</div>
+            </td>
+            <td class="lab-date-val">Spring 2025</td>
+            <td><span class="lab-grade-badge">A-</span></td>
+            <td><button class="lab-btn-download" style="background:transparent; border:1px solid rgba(26,31,46,0.15);">View Details</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2 class="section-title">Technical Skills</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="skills-grid">
+
+      <div class="skill-group">
+        <div class="skill-group-label">// CAD & Simulation</div>
+        <div class="skill-item"><span class="skill-name">SolidWorks (CSWA)</span><div class="skill-bar"><div class="skill-bar-fill" style="width:90%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">ANSYS (CFD)</span><div class="skill-bar"><div class="skill-bar-fill" style="width:75%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">AutoCAD</span><div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">DesignBuilder</span><div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">MATLAB</span><div class="skill-bar"><div class="skill-bar-fill" style="width:70%"></div></div></div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-label">// Engineering Domains</div>
+        <div class="skill-item"><span class="skill-name">Thermal Systems</span><div class="skill-bar"><div class="skill-bar-fill" style="width:88%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Fluid Mechanics</span><div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">HVAC Design</span><div class="skill-bar"><div class="skill-bar-fill" style="width:82%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Heat Transfer</span><div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Mechanical Maintenance</span><div class="skill-bar"><div class="skill-bar-fill" style="width:75%"></div></div></div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-label">// Controls & Automation</div>
+        <div class="skill-item"><span class="skill-name">LAD PLC (Siemens TIA)</span><div class="skill-bar"><div class="skill-bar-fill" style="width:65%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">LAD with ABB AC500</span><div class="skill-bar"><div class="skill-bar-fill" style="width:60%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Condition Monitoring</span><div class="skill-bar"><div class="skill-bar-fill" style="width:72%"></div></div></div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-label">// Professional</div>
+        <div class="skill-item"><span class="skill-name">Technical Communication</span><div class="skill-bar"><div class="skill-bar-fill" style="width:88%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Team Collaboration</span><div class="skill-bar"><div class="skill-bar-fill" style="width:90%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">English</span><div class="skill-bar"><div class="skill-bar-fill" style="width:95%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Swahili</span><div class="skill-bar"><div class="skill-bar-fill" style="width:95%"></div></div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="dark">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2 class="section-title">Experience</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="exp-block">
+      <div class="exp-date">Jul 2025 – Sep 2025</div>
+      <div class="exp-role">Mechanical Department Internship (Industrial Attachment)</div>
+      <div class="exp-company">Bamburi Cement PLC (Mombasa Plant) · Mombasa, Kenya</div>
+      <p style="font-size: 0.9rem; color: rgba(200,212,224,0.85); line-height: 1.7; margin-bottom: 1rem;">
+        Completed a comprehensive industrial attachment focusing on cement production, mechanical maintenance, inspection, and reliability practices. Gained direct exposure to compressors, gearboxes, conveyor systems, bucket elevators, rotary kilns, ball mills, fans, and packing equipment.
+      </p>
+      <ul class="exp-bullets" style="margin-bottom: 1.5rem;">
+        <li>Developed practical skills in vibration analysis, thermography, laser alignment, and bearing inspections.</li>
+        <li>Supported preventive maintenance and safety procedures, alignment audits, and component inspection workflows.</li>
+        <li>Acquired environmental and safety awareness protocols standard in high-output heavy manufacturing plants.</li>
+      </ul>
+      <a href="./Internship/Internship Report.pdf" target="_blank" class="btn btn-primary" style="font-size: 0.65rem; padding: 0.6rem 1.5rem; text-decoration: none;">View Internship Report PDF</a>
+    </div>
+    <div style="margin-top: 3rem; text-align: center;">
+      <a href="./work-catalog/index.html" class="btn btn-ghost">View Bamburi & Workshop Photo Catalog</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2 class="section-title">Contact</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="contact-grid">
+      <div>
+        <h3 class="contact-headline">Let's Build<em>Something.</em></h3>
+        <p class="contact-sub">
+          Open to graduate roles, internships, and project collaborations across
+          thermal systems, HVAC, manufacturing, energy, and industrial engineering.
+          Based in Famagusta — available globally.
+        </p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:tarik19951@gmail.com" class="contact-link">
+          <div class="contact-link-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          </div>
+          <div>
+            <div class="contact-link-label">Email</div>
+            <div class="contact-link-val">tarik19951@gmail.com</div>
+          </div>
+        </a>
+        <a href="tel:+254759841786" class="contact-link">
+          <div class="contact-link-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+          </div>
+          <div>
+            <div class="contact-link-label">Phone</div>
+            <div class="contact-link-val">+254 759 841 786</div>
+          </div>
+        </a>
+        <a href="https://www.linkedin.com/in/tarik-tariq-5a75ab2b1/" target="_blank" rel="noopener" class="contact-link">
+          <div class="contact-link-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zm2-3a2 2 0 110-4 2 2 0 010 4z"/></svg>
+          </div>
+          <div>
+            <div class="contact-link-label">LinkedIn</div>
+            <div class="contact-link-val">Tarik Tariq</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 <span>Tarik Tariq</span> — Mechanical Engineer</p>
+  <p>Famagusta, Cyprus &nbsp;·&nbsp; <span>tarik19951@gmail.com</span></p>
+</footer>
+
+<!-- LAB REPORT MODAL -->
+<div class="modal-overlay" id="labModal">
+  <div class="modal-container">
+    <button class="modal-close" onclick="closeLabModal()">&times;</button>
+    <div class="modal-header">
+      <div class="modal-course" id="modalCourse">COURSE CODE</div>
+      <h3 class="modal-title" id="modalTitle">LAB REPORT TITLE</h3>
+    </div>
+    <div class="modal-meta-grid">
+      <div class="modal-meta-item">
+        <span class="modal-meta-label">Term:</span>
+        <span class="modal-meta-val" id="modalTerm">FALL 2025</span>
+      </div>
+      <div class="modal-meta-item">
+        <span class="modal-meta-label">Grade:</span>
+        <span class="modal-meta-val grade" id="modalGrade">A</span>
+      </div>
+    </div>
+    <div class="modal-body" id="modalDesc">
+      Detailed lab description will go here.
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeLabModal()" style="padding: 0.5rem 1.2rem; font-size: 0.7rem;">Close</button>
+      <a href="#" id="modalPdfLink" target="_blank" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.7rem; text-decoration: none;">Open PDF Report</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Animate skill bars on scroll into view
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+          bar.style.width = bar.style.width; // trigger reflow
+        });
+      }
+    });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll('.skills-grid').forEach(el => observer.observe(el));
+
+  // Active nav highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav ul a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current
+        ? 'var(--copper)' : '';
+    });
+  });
+
+  // Video Playlist Switcher
+  function loadVideo(youtubeId, title, description, tag) {
+    // Update iframe src
+    document.getElementById('mainYoutubePlayer').src = `https://www.youtube.com/embed/${youtubeId}`;
+    // Update title & description
+    document.getElementById('mainVideoTitle').innerText = title;
+    document.getElementById('mainVideoDesc').innerText = description;
+    document.getElementById('mainVideoTag').innerText = tag || '// Project Walkthrough';
+    
+    // Toggle active playlist items
+    const playlistItems = document.querySelectorAll('.playlist-item');
+    playlistItems.forEach(item => item.classList.remove('active'));
+    
+    // Find item that matches the click
+    event.currentTarget.classList.add('active');
+  }
+
+  // Lab Reports Filter
+  function filterLabs(category) {
+    // Update active filter button class
+    const buttons = document.querySelectorAll('.lab-filter-btn');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+
+    // Filter table rows
+    const rows = document.querySelectorAll('#labs-list-body tr');
+    rows.forEach(row => {
+      const cat = row.getAttribute('data-category');
+      if (category === 'all' || cat === category) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  }
+
+  // Modal operations for Lab Reports
+  function openLabModal(row) {
+    const title = row.querySelector('.lab-report-title').innerText;
+    const course = row.querySelector('.lab-course-code').innerText;
+    const term = row.querySelector('.lab-date-val').innerText;
+    const grade = row.querySelector('.lab-grade-badge').innerText;
+    const desc = row.getAttribute('data-description');
+    const pdf = row.getAttribute('data-pdf');
+
+    document.getElementById('modalTitle').innerText = title;
+    document.getElementById('modalCourse').innerText = course;
+    document.getElementById('modalTerm').innerText = term;
+    document.getElementById('modalGrade').innerText = grade;
+    document.getElementById('modalDesc').innerText = desc;
+    document.getElementById('modalPdfLink').href = pdf;
+
+    document.getElementById('labModal').classList.add('active');
+  }
+
+  function closeLabModal() {
+    document.getElementById('labModal').classList.remove('active');
+  }
+
+  // Close modal on click outside or ESC key
+  window.addEventListener('click', (e) => {
+    const modal = document.getElementById('labModal');
+    if (e.target === modal) {
+      closeLabModal();
+    }
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeLabModal();
+    }
+  });
+</script>
+</body>
+</html>

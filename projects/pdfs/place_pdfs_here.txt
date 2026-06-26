@@ -1,0 +1,8 @@
+Place your Project PDF files in this folder.
+
+Make sure the file names match what is linked in the projects index.html, or update the links in projects/index.html to match your files!
+
+For example:
+- regenerative_indirect_evaporative_cooler.pdf
+- hydronic_heating_system_design.pdf
+- mechanical_ventilation_duct_system.pdf

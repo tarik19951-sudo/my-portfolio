@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab Reports — Tarik Tariq</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gun:      #1A1F2E;
+    --gun-mid:  #232A3B;
+    --steel:    #8B9BAE;
+    --alum:     #C8D4E0;
+    --copper:   #C97240;
+    --copper-lt:#E08A58;
+    --offwhite: #EEF1F4;
+    --white:    #FFFFFF;
+    --mono: 'JetBrains Mono', monospace;
+    --display: 'Rajdhani', sans-serif;
+    --body: 'Inter', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--body);
+    background: var(--gun);
+    color: var(--alum);
+    overflow-x: hidden;
+    min-height: 100vh;
+    padding-bottom: 5rem;
+  }
+
+  /* Blueprint grid background */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(200,212,224,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,212,224,0.03) 1px, transparent 1px),
+      linear-gradient(rgba(200,212,224,0.01) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,212,224,0.01) 1px, transparent 1px);
+    background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 2.5rem;
+    background: rgba(26,31,46,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,212,224,0.08);
+  }
+  .nav-logo {
+    font-family: var(--display);
+    font-size: 1.25rem; font-weight: 700; letter-spacing: 0.12em;
+    color: var(--alum); text-decoration: none; text-transform: uppercase;
+  }
+  .nav-logo span { color: var(--copper); }
+  .back-link {
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em;
+    color: var(--steel); text-decoration: none; text-transform: uppercase;
+    transition: color 0.2s;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .back-link:hover { color: var(--copper); }
+
+  /* ── CONTAINER ── */
+  .container {
+    max-width: 1100px;
+    margin: 8rem auto 0;
+    padding: 0 2.5rem;
+  }
+
+  .header-block {
+    margin-bottom: 3.5rem;
+    position: relative;
+    border-left: 2px solid var(--copper);
+    padding-left: 1.5rem;
+  }
+  .eyebrow {
+    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.15em;
+    color: var(--copper); text-transform: uppercase; margin-bottom: 0.5rem;
+  }
+  .title {
+    font-family: var(--display); font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--white);
+  }
+  .subtitle {
+    font-size: 0.95rem; color: var(--steel); line-height: 1.75;
+    margin-top: 0.5rem; max-width: 600px;
+  }
+
+  /* ── FILTERS ── */
+  .filters {
+    display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2rem;
+  }
+  .filter-btn {
+    font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em;
+    text-transform: uppercase; background: rgba(200,212,224,0.05);
+    border: 1px solid rgba(200,212,224,0.1); color: var(--steel);
+    padding: 0.5rem 1.2rem; cursor: pointer; transition: all 0.2s;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--copper); border-color: var(--copper); color: var(--white);
+  }
+
+  /* ── TABLE / LIST ── */
+  .table-container {
+    background: rgba(200,212,224,0.03);
+    border: 1px solid rgba(200,212,224,0.08);
+    overflow-x: auto;
+    position: relative;
+  }
+  
+  /* Grid design frame corner marks */
+  .table-container::before {
+    content: '';
+    position: absolute; top: 0; left: 0; width: 6px; height: 6px;
+    border-top: 1px solid var(--copper); border-left: 1px solid var(--copper);
+  }
+  .table-container::after {
+    content: '';
+    position: absolute; bottom: 0; right: 0; width: 6px; height: 6px;
+    border-bottom: 1px solid var(--copper); border-right: 1px solid var(--copper);
+  }
+
+  table {
+    width: 100%; border-collapse: collapse; text-align: left;
+    min-width: 700px;
+  }
+
+  th {
+    font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--steel);
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid rgba(200,212,224,0.12);
+    background: rgba(26,31,46,0.5);
+  }
+
+  td {
+    padding: 1.2rem 1.5rem;
+    font-size: 0.9rem;
+    border-bottom: 1px solid rgba(200,212,224,0.06);
+    vertical-align: middle;
+    transition: background 0.15s;
+  }
+
+  tr:hover td {
+    background: rgba(200,212,224,0.02);
+  }
+
+  .course-code {
+    font-family: var(--mono); font-size: 0.75rem; font-weight: 500;
+    color: var(--copper);
+  }
+
+  .report-title {
+    font-family: var(--display); font-size: 1.15rem; font-weight: 600;
+    color: var(--white); text-transform: uppercase; letter-spacing: 0.03em;
+  }
+  .report-desc {
+    font-size: 0.78rem; color: var(--steel); margin-top: 0.2rem;
+    font-family: var(--body);
+  }
+
+  .date-val {
+    font-family: var(--mono); font-size: 0.72rem; color: var(--steel);
+  }
+
+  .grade-badge {
+    display: inline-block; font-family: var(--mono); font-size: 0.75rem;
+    font-weight: 600; text-transform: uppercase; color: var(--gun);
+    background: var(--alum); padding: 0.2rem 0.5rem; border-radius: 2px;
+    text-align: center; min-width: 2.2rem;
+  }
+  .grade-badge.excellent {
+    background: var(--copper); color: var(--white);
+  }
+
+  .btn-download {
+    font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.08em;
+    text-transform: uppercase; text-decoration: none;
+    padding: 0.5rem 1rem; border: 1px solid rgba(200,212,224,0.2);
+    color: var(--alum); transition: all 0.2s; display: inline-block;
+    cursor: pointer;
+  }
+  .btn-download:hover {
+    border-color: var(--copper); color: var(--copper);
+    background: rgba(201,114,64,0.05);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 8rem;
+    padding: 2rem 2.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(200,212,224,0.06);
+    background: rgba(26,31,46,0.3);
+  }
+  footer p {
+    font-family: var(--mono); font-size: 0.62rem;
+    color: var(--steel); letter-spacing: 0.08em;
+  }
+  footer span { color: var(--copper); }
+
+  @media (max-width: 768px) {
+    .container { margin-top: 6rem; padding: 0 1.5rem; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+
+  /* ── MODAL STYLES ── */
+  .modal-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 200;
+    background: rgba(26, 31, 46, 0.85);
+    backdrop-filter: blur(8px);
+    display: flex; justify-content: center; align-items: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+    padding: 1.5rem;
+  }
+  .modal-overlay.active {
+    opacity: 1; pointer-events: auto;
+  }
+  .modal-container {
+    background: var(--gun-mid);
+    border: 1px solid rgba(200, 212, 224, 0.15);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    max-width: 650px; width: 100%;
+    position: relative;
+    padding: 2.5rem;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+  }
+  .modal-overlay.active .modal-container {
+    transform: translateY(0);
+  }
+  /* Corner marks for blueprint theme */
+  .modal-container::before {
+    content: '';
+    position: absolute; top: 0; left: 0; width: 8px; height: 8px;
+    border-top: 2px solid var(--copper); border-left: 2px solid var(--copper);
+  }
+  .modal-container::after {
+    content: '';
+    position: absolute; bottom: 0; right: 0; width: 8px; height: 8px;
+    border-bottom: 2px solid var(--copper); border-right: 2px solid var(--copper);
+  }
+  .modal-close {
+    position: absolute; top: 1.25rem; right: 1.25rem;
+    background: transparent; border: none;
+    color: var(--steel); font-size: 1.5rem; cursor: pointer;
+    transition: color 0.2s;
+    width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+  }
+  .modal-close:hover { color: var(--copper); }
+  
+  .modal-header { margin-bottom: 1.5rem; }
+  .modal-course {
+    font-family: var(--mono); font-size: 0.72rem; color: var(--copper);
+    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem;
+  }
+  .modal-title {
+    font-family: var(--display); font-size: 1.6rem; font-weight: 700;
+    color: var(--white); text-transform: uppercase; letter-spacing: 0.04em;
+    line-height: 1.2;
+  }
+  
+  .modal-meta-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    border-top: 1px solid rgba(200, 212, 224, 0.08);
+    border-bottom: 1px solid rgba(200, 212, 224, 0.08);
+    padding: 1rem 0; margin-bottom: 1.5rem;
+  }
+  .modal-meta-item { display: flex; gap: 0.5rem; align-items: baseline; }
+  .modal-meta-label {
+    font-family: var(--mono); font-size: 0.65rem; color: var(--steel);
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .modal-meta-val {
+    font-family: var(--display); font-size: 1rem; font-weight: 600; color: var(--alum);
+  }
+  .modal-meta-val.grade { color: var(--copper); }
+  
+  .modal-body {
+    font-size: 0.92rem; line-height: 1.75; color: rgba(200, 212, 224, 0.8);
+    margin-bottom: 2rem;
+  }
+  .modal-footer { display: flex; gap: 1rem; justify-content: flex-end; }
+
+  #labs-list tr { cursor: pointer; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="../index.html" class="nav-logo">T<span>.</span>Tariq</a>
+  <a href="../index.html" class="back-link">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+    Back to Main
+  </a>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+  
+  <div class="header-block">
+    <p class="eyebrow">// Academic Lab Reports Directory</p>
+    <h1 class="title">University Lab Reports</h1>
+    <p class="subtitle">
+      A collection of laboratory reports, experimental studies, and mathematical models completed 
+      during my BS in Mechanical Engineering at Eastern Mediterranean University.
+    </p>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters">
+    <button class="filter-btn active" onclick="filterLabs('all')">All Courses</button>
+    <button class="filter-btn" onclick="filterLabs('thermo')">Thermodynamics</button>
+    <button class="filter-btn" onclick="filterLabs('heat-transfer')">Heat Transfer</button>
+    <button class="filter-btn" onclick="filterLabs('mechanics')">Mechanics of Materials</button>
+    <button class="filter-btn" onclick="filterLabs('energy')">Energy Systems</button>
+  </div>
+
+  <!-- Reports Table -->
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 15%;">Course</th>
+          <th style="width: 50%;">Report Details</th>
+          <th style="width: 15%;">Term</th>
+          <th style="width: 10%;">Grade</th>
+          <th style="width: 10%;">Details</th>
+        </tr>
+      </thead>
+      <tbody id="labs-list">
+        
+        <tr data-category="thermo" data-pdf="pdfs/Wet Cooling Tower.pdf" data-description="Experimental analysis of a wet cooling tower using thermodynamic calculations and psychrometric chart readings. The work compared air and water mass flow rates and showed how different methods can give different performance results." onclick="openLabModal(this)">
+          <td class="course-code">MENG 344</td>
+          <td>
+            <div class="report-title">Wet Cooling Tower Performance</div>
+            <div class="report-desc">Thermodynamic analysis comparing air and water mass flow rates using psychrometric charts.</div>
+          </td>
+          <td class="date-val">Fall 2025</td>
+          <td><span class="grade-badge excellent">A</span></td>
+          <td><button class="btn-download" style="background:transparent; border:1px solid rgba(200,212,224,0.15);">View Details</button></td>
+        </tr>
+
+        <tr data-category="thermo" data-pdf="pdfs/Air conditioning.pdf" data-description="Tested the Argemsan K-212 heat recovery air handling unit during heating and cooling processes. The experiment showed how the unit changes temperature and relative humidity while recovering energy from exhaust air." onclick="openLabModal(this)">
+          <td class="course-code">MENG 443</td>
+          <td>
+            <div class="report-title">Argemsan K-212 Air Conditioning Testing</div>
+            <div class="report-desc">Energy recovery and psychrometric performance study of a heat recovery air handling unit.</div>
+          </td>
+          <td class="date-val">Fall 2025</td>
+          <td><span class="grade-badge excellent">A</span></td>
+          <td><button class="btn-download" style="background:transparent; border:1px solid rgba(200,212,224,0.15);">View Details</button></td>
+        </tr>
+
+        <tr data-category="heat-transfer" data-pdf="pdfs/Combined Forced Convection and Radiation.pdf" data-description="Studied heat loss from a heated cylinder under different air velocities. As air velocity increased, forced convection became stronger, while radiation became less dominant due to lower surface temperature." onclick="openLabModal(this)">
+          <td class="course-code">MENG 345</td>
+          <td>
+            <div class="report-title">Combined Forced Convection & Radiation</div>
+            <div class="report-desc">Analysis of velocity-dependent heat loss profiles and mode dominance on a heated cylinder.</div>
+          </td>
+          <td class="date-val">Fall 2025</td>
+          <td><span class="grade-badge excellent">A</span></td>
+          <td><button class="btn-download" style="background:transparent; border:1px solid rgba(200,212,224,0.15);">View Details</button></td>
+        </tr>
+
+        <tr data-category="mechanics" data-pdf="pdfs/Deflection of Beams.pdf" data-description="Compared theoretical and experimental deflection of simply supported steel beams and cantilever aluminum beams. The results showed a mostly linear relationship between load position and deflection, but with some differences between theory and experiment." onclick="openLabModal(this)">
+          <td class="course-code">MENG 244</td>
+          <td>
+            <div class="report-title">Deflection of Structural Beams</div>
+            <div class="report-desc">Experimental and analytical elastic deflection study of steel and aluminum beam geometries.</div>
+          </td>
+          <td class="date-val">Spring 2025</td>
+          <td><span class="grade-badge">A-</span></td>
+          <td><button class="btn-download" style="background:transparent; border:1px solid rgba(200,212,224,0.15);">View Details</button></td>
+        </tr>
+
+        <tr data-category="energy" data-pdf="pdfs/Determining instant electrical and thermal power output of a PVT system.pdf" data-description="Measured the instant electrical and thermal output of a photovoltaic-thermal system at different tilt angles. The highest electrical and thermal power occurred at 15°, while the calculated best tilt angle for Famagusta was about 12°–13°." onclick="openLabModal(this)">
+          <td class="course-code">MENG 447</td>
+          <td>
+            <div class="report-title">PVT System Power Output</div>
+            <div class="report-desc">Experimental optimization of electrical and thermal output of a hybrid solar PVT panel.</div>
+          </td>
+          <td class="date-val">Spring 2025</td>
+          <td><span class="grade-badge excellent">A</span></td>
+          <td><button class="btn-download" style="background:transparent; border:1px solid rgba(200,212,224,0.15);">View Details</button></td>
+        </tr>
+
+        <tr data-category="thermo" data-pdf="pdfs/Electric boiler.pdf" data-description="Studied how water changes into steam in an electric kettle by measuring water volume, boiling time, temperature change, and energy input. The report used enthalpy calculations and a T-v diagram to estimate boiler power and understand phase change." onclick="openLabModal(this)">
+          <td class="course-code">MENG 340</td>
+          <td>
+            <div class="report-title">Electric Boiler Phase Change</div>
+            <div class="report-desc">Analysis of liquid-vapor phase transition and transient thermal efficiency of an electric kettle.</div>
+          </td>
+          <td class="date-val">Spring 2025</td>
+          <td><span class="grade-badge excellent">A</span></td>
+          <td><button class="btn-download" style="background:transparent; border:1px solid rgba(200,212,224,0.15);">View Details</button></td>
+        </tr>
+
+        <tr data-category="heat-transfer" data-pdf="pdfs/Steady State Conduction Through a Uniform Wall.pdf" data-description="Verified Fourier’s law using a heat conduction experiment through a uniform wall. The results showed that higher heat transfer rate produced larger temperature differences, confirming the link between heat flux and temperature gradient." onclick="openLabModal(this)">
+          <td class="course-code">MENG 345</td>
+          <td>
+            <div class="report-title">Steady-State Conduction Study</div>
+            <div class="report-desc">Verification of Fourier's law of heat conduction through uniform solid wall blocks.</div>
+          </td>
+          <td class="date-val">Fall 2025</td>
+          <td><span class="grade-badge excellent">A</span></td>
+          <td><button class="btn-download" style="background:transparent; border:1px solid rgba(200,212,224,0.15);">View Details</button></td>
+        </tr>
+
+        <tr data-category="thermo" data-pdf="pdfs/The heat engine.pdf" data-description="Used the PASCO heat engine apparatus to study how heat can be converted into work. The experiment measured pressure-volume changes, plotted a P-V diagram, and calculated both thermodynamic and mechanical work." onclick="openLabModal(this)">
+          <td class="course-code">MENG 340</td>
+          <td>
+            <div class="report-title">PASCO Heat Engine Study</div>
+            <div class="report-desc">Pressure-Volume thermodynamic cycle measurements and mechanical efficiency calculation.</div>
+          </td>
+          <td class="date-val">Spring 2025</td>
+          <td><span class="grade-badge excellent">A</span></td>
+          <td><button class="btn-download" style="background:transparent; border:1px solid rgba(200,212,224,0.15);">View Details</button></td>
+        </tr>
+
+        <tr data-category="mechanics" data-pdf="pdfs/Torsion test.pdf" data-description="Tested a material under twisting load to study torque, angle of twist, shear stress, and modulus of rigidity. The experiment found large differences between theoretical and experimental modulus values, showing the importance of careful measurement and error analysis." onclick="openLabModal(this)">
+          <td class="course-code">MENG 244</td>
+          <td>
+            <div class="report-title">Torsion Testing of Metals</div>
+            <div class="report-desc">Torsional stress, shear modulus (rigidity), and experimental elastic error analysis.</div>
+          </td>
+          <td class="date-val">Spring 2025</td>
+          <td><span class="grade-badge">A-</span></td>
+          <td><button class="btn-download" style="background:transparent; border:1px solid rgba(200,212,224,0.15);">View Details</button></td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 <span>Tarik Tariq</span> — Mechanical Engineer</p>
+  <p>Famagusta, Cyprus &nbsp;·&nbsp; <span>tarik19951@gmail.com</span></p>
+</footer>
+
+<!-- LAB REPORT MODAL -->
+<div class="modal-overlay" id="labModal">
+  <div class="modal-container">
+    <button class="modal-close" onclick="closeLabModal()">&times;</button>
+    <div class="modal-header">
+      <div class="modal-course" id="modalCourse">COURSE CODE</div>
+      <h3 class="modal-title" id="modalTitle">LAB REPORT TITLE</h3>
+    </div>
+    <div class="modal-meta-grid">
+      <div class="modal-meta-item">
+        <span class="modal-meta-label">Term:</span>
+        <span class="modal-meta-val" id="modalTerm">FALL 2025</span>
+      </div>
+      <div class="modal-meta-item">
+        <span class="modal-meta-label">Grade:</span>
+        <span class="modal-meta-val grade" id="modalGrade">A</span>
+      </div>
+    </div>
+    <div class="modal-body" id="modalDesc">
+      Detailed lab description will go here.
+    </div>
+    <div class="modal-footer">
+      <button class="filter-btn" onclick="closeLabModal()" style="padding: 0.5rem 1.2rem; font-size: 0.7rem; border-color: rgba(200,212,224,0.2);">Close</button>
+      <a href="#" id="modalPdfLink" target="_blank" class="btn-download" style="padding: 0.5rem 1.5rem; font-size: 0.7rem; text-decoration: none; border-color: var(--copper); color: var(--copper); background: rgba(201,114,64,0.05);">Open PDF Report</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  function filterLabs(category) {
+    // Update active filter button class
+    const buttons = document.querySelectorAll('.filter-btn');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+
+    // Filter table rows
+    const rows = document.querySelectorAll('#labs-list tr');
+    rows.forEach(row => {
+      const cat = row.getAttribute('data-category');
+      if (category === 'all' || cat === category) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  }
+
+  // Modal operations for Lab Reports
+  function openLabModal(row) {
+    const title = row.querySelector('.report-title').innerText;
+    const course = row.querySelector('.course-code').innerText;
+    const term = row.querySelector('.date-val').innerText;
+    const grade = row.querySelector('.grade-badge').innerText;
+    const desc = row.getAttribute('data-description');
+    const pdf = row.getAttribute('data-pdf');
+
+    document.getElementById('modalTitle').innerText = title;
+    document.getElementById('modalCourse').innerText = course;
+    document.getElementById('modalTerm').innerText = term;
+    document.getElementById('modalGrade').innerText = grade;
+    document.getElementById('modalDesc').innerText = desc;
+    document.getElementById('modalPdfLink').href = pdf;
+
+    document.getElementById('labModal').classList.add('active');
+  }
+
+  function closeLabModal() {
+    document.getElementById('labModal').classList.remove('active');
+  }
+
+  // Close modal on click outside or ESC key
+  window.addEventListener('click', (e) => {
+    const modal = document.getElementById('labModal');
+    if (e.target === modal) {
+      closeLabModal();
+    }
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeLabModal();
+    }
+  });
+</script>
+</body>
+</html>
