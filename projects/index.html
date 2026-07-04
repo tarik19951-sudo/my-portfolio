@@ -10,7 +10,7 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg:       #F8FBFD;
+    --bg:       #FFFFFF;
     --surface:  #FFFFFF;
     --muted:    #6B7280;
     --text:     #0F172A;
@@ -26,24 +26,15 @@
 
   body {
     font-family: var(--body);
-    background: linear-gradient(180deg, var(--bg), #FFFFFF 60%);
+    background: var(--bg);
     color: var(--text);
     overflow-x: hidden;
     min-height: 100vh;
     padding-bottom: 5rem;
   }
 
-  /* Subtle grid background for texture */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image:
-      linear-gradient(rgba(15,23,42,0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(15,23,42,0.02) 1px, transparent 1px);
-    background-size: 96px 96px, 96px 96px;
-    pointer-events: none;
-    z-index: -1;
-  }
+  /* remove decorative grid for a clean white background */
+  body::before { content: ''; display: none; }
 
   /* ── NAV ── */
   nav {
