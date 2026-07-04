@@ -10,14 +10,14 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --gun:      #0B0E14; /* Extremely deep engineering space dark */
-    --gun-mid:  #111622; /* Mid dark for cards and sections */
-    --gun-light:#192030; /* Lighter dark blue-gray */
-    --steel:    #6C7D93; /* Steel blue annotation color */
-    --alum:     #A5B7C9; /* Matte silver aluminum text */
-    --copper:   #E26D28; /* Rich industrial copper orange */
-    --copper-lt:#F0884A; /* Brushed light copper hover state */
-    --titanium: #2E86AB; /* Scientific blueprint blue */
+    --gun:      #FFFFFF;
+    --gun-mid:  #F3F4F6;
+    --gun-light:#E6EEF6;
+    --steel:    #6B7280;
+    --alum:     #94A3B8;
+    --copper:   #FF7A59;
+    --copper-lt:#FF9B7A;
+    --titanium: #60A5FA;
     --white:    #FFFFFF;
     --mono: 'JetBrains Mono', monospace;
     --display: 'Rajdhani', sans-serif;
@@ -29,7 +29,7 @@
   body {
     font-family: var(--body);
     background: var(--gun);
-    color: var(--alum);
+    color: var(--text, #0F172A);
     overflow-x: hidden;
     position: relative;
   }
@@ -50,17 +50,8 @@
     background: var(--steel);
   }
 
-  /* Full page blueprint grid */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image:
-      linear-gradient(rgba(46, 134, 171, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(46, 134, 171, 0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    z-index: -1;
-  }
+  /* remove the dark blueprint grid for a bright clean background */
+  body::before { content: ''; display: none; }
 
   /* Scroll Progress Bar */
   .scroll-progress {

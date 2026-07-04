@@ -10,13 +10,13 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --gun:      #1A1F2E;
-    --gun-mid:  #232A3B;
-    --steel:    #8B9BAE;
-    --alum:     #C8D4E0;
-    --copper:   #C97240;
-    --copper-lt:#E08A58;
-    --offwhite: #EEF1F4;
+    --gun:      #FFFFFF;
+    --gun-mid:  #F3F4F6;
+    --steel:    #6B7280;
+    --alum:     #94A3B8;
+    --copper:   #FF7A59;
+    --copper-lt:#FF9B7A;
+    --offwhite: #F8FAFC;
     --white:    #FFFFFF;
     --mono: 'JetBrains Mono', monospace;
     --display: 'Rajdhani', sans-serif;
@@ -28,25 +28,14 @@
   body {
     font-family: var(--body);
     background: var(--gun);
-    color: var(--alum);
+    color: var(--text, #0F172A);
     overflow-x: hidden;
     min-height: 100vh;
     padding-bottom: 5rem;
   }
 
-  /* Blueprint grid background */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image:
-      linear-gradient(rgba(200,212,224,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(200,212,224,0.03) 1px, transparent 1px),
-      linear-gradient(rgba(200,212,224,0.01) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(200,212,224,0.01) 1px, transparent 1px);
-    background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
-    pointer-events: none;
-    z-index: -1;
-  }
+  /* remove decorative grid for a cleaner white background */
+  body::before { content: ''; display: none; }
 
   /* ── NAV ── */
   nav {
