@@ -10,14 +10,14 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --gun:      #FFFFFF;
-    --gun-mid:  #F3F4F6;
-    --gun-light:#E6EEF6;
-    --steel:    #6B7280;
-    --alum:     #94A3B8;
-    --copper:   #FF7A59;
-    --copper-lt:#FF9B7A;
-    --titanium: #60A5FA;
+    --gun:      #04070F; /* Extremely deep engineering space dark */
+    --gun-mid:  #101524; /* Mid dark for cards and sections */
+    --gun-light:#141A2A; /* Lighter dark blue-gray */
+    --steel:    #99AFCA; /* Cooler, higher contrast annotation tone */
+    --alum:     #D4E0EA; /* Brighter aluminum text */
+    --copper:   #E26D28; /* Rich industrial copper orange */
+    --copper-lt:#F0884A; /* Brushed light copper hover state */
+    --titanium: #2E86AB; /* Scientific blueprint blue */
     --white:    #FFFFFF;
     --mono: 'JetBrains Mono', monospace;
     --display: 'Rajdhani', sans-serif;
@@ -29,7 +29,7 @@
   body {
     font-family: var(--body);
     background: var(--gun);
-    color: var(--text, #0F172A);
+    color: var(--alum);
     overflow-x: hidden;
     position: relative;
   }
@@ -50,8 +50,17 @@
     background: var(--steel);
   }
 
-  /* remove the dark blueprint grid for a bright clean background */
-  body::before { content: ''; display: none; }
+  /* Full page blueprint grid */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(46, 134, 171, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(46, 134, 171, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: -1;
+  }
 
   /* Scroll Progress Bar */
   .scroll-progress {
@@ -65,7 +74,7 @@
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; justify-content: space-between; align-items: center;
     padding: 1rem 2.5rem;
-    background: rgba(11, 14, 20, 0.85);
+    background: rgba(11, 14, 20, 0.95);
     backdrop-filter: blur(16px);
     border-bottom: 1px solid rgba(200, 212, 224, 0.08);
   }
@@ -141,7 +150,7 @@
 
   .hero-desc {
     font-size: 0.95rem; line-height: 1.75;
-    color: rgba(200, 212, 224, 0.75); max-width: 480px; margin-bottom: 2.5rem;
+    color: rgba(200, 212, 224, 0.88); max-width: 480px; margin-bottom: 2.5rem;
   }
 
   .hero-cta {
@@ -168,8 +177,8 @@
   }
   .btn-ghost:hover {
     border-color: var(--copper); color: var(--white);
-    background: rgba(226, 109, 40, 0.05);
-    box-shadow: 0 0 15px rgba(226, 109, 40, 0.1);
+    background: rgba(226, 109, 40, 0.12);
+    box-shadow: 0 0 15px rgba(226, 109, 40, 0.16);
     transform: translateY(-1px);
   }
 
@@ -225,9 +234,9 @@
   .hero-specs {
     width: 100%;
     display: flex; flex-direction: column; gap: 1px;
-    background: rgba(17, 22, 34, 0.85);
+    background: rgba(4, 7, 15, 0.98);
     backdrop-filter: blur(8px);
-    border: 1px solid rgba(200, 212, 224, 0.1);
+    border: 1px solid rgba(200, 212, 224, 0.08);
     padding: 2rem;
     position: relative;
     z-index: 10;
@@ -280,7 +289,7 @@
   .section-rule {
     flex: 1;
     height: 1px;
-    background: rgba(200, 212, 224, 0.15);
+    background: rgba(200, 212, 224, 0.08);
     position: relative;
   }
   .section-rule::before, .section-rule::after {
@@ -304,7 +313,7 @@
   .about-text p:last-child { margin-bottom: 0; }
   
   .about-edu {
-    background: var(--gun-mid); color: var(--alum);
+    background: rgba(4, 7, 15, 0.98); color: var(--alum);
     border: 1px solid rgba(200, 212, 224, 0.08);
     padding: 2.5rem 2rem;
     position: relative;
@@ -351,7 +360,7 @@
   .honor-tag {
     display: inline-block; font-family: var(--mono); font-size: 0.6rem;
     letter-spacing: 0.08em; text-transform: uppercase; color: var(--alum);
-    background: rgba(200, 212, 224, 0.06); border: 1px solid rgba(200, 212, 224, 0.12);
+    background: rgba(200, 212, 224, 0.08); border: 1px solid rgba(200, 212, 224, 0.12);
     padding: 0.3rem 0.7rem; margin: 0.2rem 0.2rem 0 0;
   }
 
@@ -361,7 +370,7 @@
     gap: 2rem;
   }
   .project-card {
-    background: var(--gun-mid);
+    background: rgba(4, 7, 15, 0.96);
     border: 1px solid rgba(200, 212, 224, 0.08);
     padding: 2.5rem 2rem;
     position: relative;
@@ -378,9 +387,9 @@
   
   .project-card:hover {
     border-color: rgba(226, 109, 40, 0.3);
-    background: rgba(17, 22, 34, 0.6);
+    background: rgba(11, 14, 20, 0.92);
     transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
   }
   .project-card:hover::before, .project-card:hover::after {
     border-color: var(--copper);
@@ -404,7 +413,7 @@
   }
   .tool-chip {
     font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.06em;
-    text-transform: uppercase; color: var(--alum); background: rgba(200, 212, 224, 0.05);
+    text-transform: uppercase; color: var(--alum); background: rgba(200, 212, 224, 0.08);
     border: 1px solid rgba(200, 212, 224, 0.12);
     padding: 0.25rem 0.6rem;
   }
@@ -431,14 +440,14 @@
     text-align: center;
     gap: 0.75rem;
     padding: 1.2rem 0.8rem;
-    background: var(--gun-mid);
-    border: 1px solid rgba(200, 212, 224, 0.06);
+    background: rgba(4, 7, 15, 0.96);
+    border: 1px solid rgba(200, 212, 224, 0.08);
     position: relative;
     transition: all 0.3s ease;
   }
   .skill-item-dial:hover {
-    border-color: rgba(226, 109, 40, 0.3);
-    background: rgba(17, 22, 34, 0.8);
+    border-color: rgba(226, 109, 40, 0.32);
+    background: rgba(4, 7, 15, 0.98);
     transform: translateY(-2px);
   }
   
@@ -535,7 +544,7 @@
     margin-top: 2rem;
   }
   .video-main {
-    background: var(--gun-mid);
+    background: rgba(4, 7, 15, 0.98);
     border: 1px solid rgba(200, 212, 224, 0.08);
     padding: 1.5rem;
     position: relative;
@@ -581,7 +590,7 @@
     line-height: 1.7;
   }
   .video-playlist {
-    background: var(--gun-mid);
+    background: rgba(4, 7, 15, 0.98);
     border: 1px solid rgba(200, 212, 224, 0.08);
     padding: 1.5rem;
     display: flex;
@@ -598,8 +607,8 @@
     display: flex;
     gap: 1rem;
     padding: 0.8rem;
-    background: rgba(11, 14, 20, 0.4);
-    border: 1px solid rgba(200, 212, 224, 0.05);
+    background: rgba(4, 7, 15, 0.75);
+    border: 1px solid rgba(200, 212, 224, 0.08);
     cursor: pointer;
     transition: all 0.25s ease;
   }
@@ -636,7 +645,7 @@
   }
   .lab-filter-btn {
     font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em;
-    text-transform: uppercase; background: var(--gun-mid);
+    text-transform: uppercase; background: rgba(4, 7, 15, 0.96);
     border: 1px solid rgba(200, 212, 224, 0.08); color: var(--steel);
     padding: 0.5rem 1.2rem; cursor: pointer; transition: all 0.25s ease;
   }
@@ -646,7 +655,7 @@
   }
 
   .lab-table-container {
-    background: var(--gun-mid);
+    background: rgba(11, 14, 20, 0.95);
     border: 1px solid rgba(200, 212, 224, 0.08);
     overflow-x: auto;
     position: relative;
@@ -669,7 +678,7 @@
     text-transform: uppercase; color: var(--steel);
     padding: 1.2rem 1.5rem;
     border-bottom: 1px solid rgba(200, 212, 224, 0.12);
-    background: rgba(11, 14, 20, 0.3);
+    background: rgba(4, 7, 15, 0.45);
   }
   .lab-table-container td {
     padding: 1.2rem 1.5rem;
@@ -683,7 +692,7 @@
     transition: all 0.25s ease;
   }
   .lab-table-container tr:hover td {
-    background: rgba(226, 109, 40, 0.04);
+    background: rgba(226, 109, 40, 0.12);
     color: var(--white);
   }
   .lab-table-container tr:hover {
@@ -748,7 +757,7 @@
     text-decoration: none; padding: 1.2rem 1.5rem;
     border: 1px solid rgba(200, 212, 224, 0.08);
     transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    background: var(--gun-mid);
+    background: rgba(4, 7, 15, 0.98);
   }
   .contact-link:hover {
     border-color: var(--copper); background: rgba(226, 109, 40, 0.04);
@@ -777,7 +786,7 @@
 
   /* ── FOOTER ── */
   footer {
-    background: var(--gun-mid); padding: 2rem 2.5rem;
+    background: rgba(4, 7, 15, 0.95); padding: 2rem 2.5rem;
     display: flex; justify-content: space-between; align-items: center;
     border-top: 1px solid rgba(200, 212, 224, 0.06);
   }
@@ -802,7 +811,7 @@
     opacity: 1; pointer-events: auto;
   }
   .modal-container {
-    background: var(--gun-mid);
+    background: rgba(4, 7, 15, 0.98);
     border: 1px solid rgba(200, 212, 224, 0.12);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
     max-width: 650px; width: 100%;
